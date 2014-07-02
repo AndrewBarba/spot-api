@@ -15,9 +15,9 @@
         "forky": "0.1.x",
         "mongoose": "3.8.x",
         "multer": "0.1.x",
-        "socket.io": "1.0.x",
         "twilio": "1.6.x",
-        "underscore": "1.6.x"
+        "underscore": "1.6.x",
+        "ws": "0.4.x"
     },
 
     "devDependencies": {
@@ -26,7 +26,7 @@
     },
 
     "scripts": {
-        "start": "node process/cluster.js",
+        "start": "node process/server-cluster.js",
         "test": "mocha --timeout 120000"
     },
 
