@@ -1,3 +1,3 @@
 
 // start jobs server
-require('./src/jobs')();
+require('../app').jobs();

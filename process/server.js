@@ -1,3 +1,3 @@
 
 // start application server
-require('./src/app')();
+require('../app').server();

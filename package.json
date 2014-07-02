@@ -2,7 +2,7 @@
     "name": "Spot",
     "version": "0.0.1",
     "description": "Node.js backend for Spot",
-    "url": "http://api.spot.abarba.me/",
+    "url": "http://api.example.com/",
 
     "engines" : {
         "node" : "0.10.29"
@@ -26,8 +26,8 @@
     },
 
     "scripts": {
-        "start": "node cluster.js",
-        "test": "mocha --timeout 10000"
+        "start": "node process/cluster.js",
+        "test": "mocha --timeout 120000"
     },
 
     "author": "Andrew Barba"
