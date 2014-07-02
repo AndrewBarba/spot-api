@@ -3,22 +3,20 @@ var _ = require('underscore')
   , async = require('async')
   , utils = require('./utils')
   , config = require('./config')
+  , errors = require('./errors');
 
-// GLOBALS
+// GLOBAL
 spot = {
-
-	// helpers
 	config: config,
 	utils: utils,
-
-	// logging
-	log: console.log,
-	error: console.log
+	error: errors,
+	log: console.log
 };
 
 _.extend(spot, {
 	database: require('./database'),
-	models: require('./models')
+	models: require('./models'),
+	services: require('./services')
 });
 
 // Web application server
@@ -28,6 +26,10 @@ exports.server = function() {
 		// start the server
 		var server = require('./server')();
 		
+		// init controllers
+		var controllers = require('./controllers')(server.app);
+
+		// add server to global
 		_.extend(spot, server);
 	});
 };
