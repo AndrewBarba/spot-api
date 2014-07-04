@@ -6,10 +6,15 @@ function error(statusCode, message) {
 }
 
 exports.send = function(res, error) {
-    res.json({
-        statusCode: error.statusCode || 500,
+    var statusCode = error.statusCode || 500;
+    res.json(statusCode, {
+        statusCode: statusCode,
         error: error.message
     });
+}
+
+exports.ServerError = function(message) {
+    return error(500, message || 'Server error');
 }
 
 exports.BadRequest = function(message) {

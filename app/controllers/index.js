@@ -9,7 +9,9 @@ module.exports = function(app) {
 	// load all controllers
 	var controllers = utils.loadFiles(__dirname);
 
-	
+	// root
+	app.get('/', controllers.root.root);
+	app.get('/status', controllers.root.status);
 
 	// not found
 	app.use(function(req, res, next){
