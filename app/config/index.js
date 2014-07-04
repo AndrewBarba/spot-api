@@ -2,6 +2,11 @@
 var _ = require('underscore');
 
 var prod = {
+    env: {
+        PROD: true,
+        DEV: false,
+        LOCAL: false
+    },
     db: process.env.DB,
     twilio: {
         sid: 'AC444de0a850e8d0e457e3f8ae5b9e332b',
@@ -11,6 +16,11 @@ var prod = {
 }
 
 var dev = {
+    env: {
+        PROD: false,
+        DEV: true,
+        LOCAL: false
+    },
     db: process.env.DB,
     twilio: {
         sid: 'AC444de0a850e8d0e457e3f8ae5b9e332b',
@@ -20,6 +30,11 @@ var dev = {
 }
 
 var local = _.extend({}, dev, {
+    env: {
+        PROD: false,
+        DEV: false,
+        LOCAL: true
+    },
     db: 'mongodb://localhost/spot-local',
 });
 

@@ -2,7 +2,8 @@
 var _ = require('underscore')
   , fs = require('fs')
   , crypto = require('crypto')
-  , _this = module.exports
+  , Error = spot.error
+  , _this = module.exports;
 
 exports.loadFiles = function(dir, param) {
     var files = {};
@@ -72,6 +73,21 @@ exports.setPhone = function(phone) {
         }
     }
     return (phone && phone.length >= 10) ? phone : null;
+}
+
+exports.verifyKeys = function(keys, object, next) {
+    var error = null;
+    for (var i = 0; i < keys.length; i++) {
+        var key = keys[i];
+        if (!object[key]) {
+            error = Error.BadRequest('Missing key: '+ key);
+            break;
+        }
+    }
+    if (next) {
+        next(error, object);
+    }
+    return error;
 }
 
 // load all utils in this folder

@@ -1,17 +1,24 @@
 
 var _ = require('underscore')
-  , async = require('async')
-  , utils = require('./utils')
-  , config = require('./config')
-  , errors = require('./errors');
+  , async = require('async');
 
 // GLOBAL
-spot = {
-	config: config,
-	utils: utils,
-	error: errors,
-	log: console.log
-};
+spot = {};
+
+// logging
+spot.log = console.log;
+
+// config
+spot.config = require('./config');
+
+// errors
+spot.error = require('./errors');
+
+// utlities
+spot.utils = require('./utils');
+
+// libs
+spot.lib = require('./lib');
 
 // database
 spot.database = require('./database');
