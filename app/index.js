@@ -13,11 +13,14 @@ spot = {
 	log: console.log
 };
 
-_.extend(spot, {
-	database: require('./database'),
-	models: require('./models'),
-	services: require('./services')
-});
+// database
+spot.database = require('./database');
+
+// models
+spot.models = require('./models');
+
+// services
+spot.services = require('./services');
 
 // Web application server
 exports.server = function() {

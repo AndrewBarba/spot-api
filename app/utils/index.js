@@ -64,5 +64,15 @@ exports.isValidEmail = function(e) {
     return String(e).match(/^\s*[\w\-\+_]+(?:\.[\w\-\+_]+)*\@[\w\-\+_]+\.[\w\-\+_]+(?:\.[\w‌​\-\+_]+)*\s*$/);
 }
 
+exports.setPhone = function(phone) {
+    if (phone) {
+        phone = phone.replace(/\D/g,'').trim();
+        if (phone.length == 11 && phone.slice(0,1) == "1") {
+            phone = phone.slice(1);
+        }
+    }
+    return (phone && phone.length >= 10) ? phone : null;
+}
+
 // load all utils in this folder
 _.extend(module.exports, this.loadFiles(__dirname));

@@ -1,11 +1,12 @@
 var mongoose = require('mongoose')
   , Schema = mongoose.Schema
   , _ = require('underscore')
-  , utils = spot.utils
+  , utils = spot.utils;
 
 var BASE_SCHEME = {
-    _id       : { type: String, default: utils.objectId, index: { unique: true }},
-    created   : { type: Date, default: Date.now, set: setDate, get: getDate, index: true }
+    _id      : { type: String, default: utils.objectId, index: { unique: true }},
+    created  : { type: Date, default: Date.now, set: setDate, get: getDate, index: true },
+    modified : { type: Date, default: Date.now, set: setDate, get: getDate } 
 }
 
 var HIDE = [ '__v', '__t', '_id' ];
@@ -14,7 +15,7 @@ var OPTIONS = {
     virtuals: true,
     getters: true,
     transform: function(doc, ret, options) {
-        var hide = HIDE.concat(doc.getHideKeys());
+        var hide = HIDE.concat(doc.getHiddenKeys());
         hide.forEach(function(key){
             delete ret[key]
         });
@@ -29,12 +30,18 @@ var OPTIONS = {
 
 function getSchema(data, options) {
     
-    // build schema
     var scheme = _.extend({}, BASE_SCHEME, data);
     var schema = new Schema(scheme, defaultOptions(options));
 
+    schema.pre('save', function(next){
+        if (this.isModified()) {
+            this.modified = Date.now();
+        }
+        next();
+    });
+
     _.extend(schema.methods, {
-        getHideKeys: function() {
+        getHiddenKeys: function() {
             return []; // override
         }
     });
