@@ -1,7 +1,7 @@
 
 // SEND ERRORS
 
-exports.send = function(res, error) {
+exports.send = function(error, res) {
     var statusCode = error.statusCode || 500;
     var message = error.message || 'Server error';
     res.json(statusCode, {

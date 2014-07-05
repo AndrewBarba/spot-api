@@ -4,10 +4,20 @@ var utils = spot.utils
   , User = spot.models.user
   , Auth = spot.models.auth;
 
+exports.userForAuth = function(token, next) {
+	Auth
+		.findOne({ token: token, valid: true })
+		.populate('user')
+		.exec(function(err, doc){
+			if (err) return next(err);
+			next(null, doc.user);
+		});
+}
+
 exports.userForPhone = function(phone, next) {
 	phone = utils.setPhone(phone);
 	User
-		.find({ phone: phone })
+		.findOne({ phone: phone })
 		.select('+phone')
 		.exec(function(err, doc){
 			if (err) return next(err);

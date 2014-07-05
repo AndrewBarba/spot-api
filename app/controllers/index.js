@@ -2,7 +2,8 @@
 var express = require('express')
   , utils = spot.utils
   , config = spot.config
-  , Error = spot.error;
+  , Error = spot.error
+  , auth = spot.auth;
 
 module.exports = function(app) {
 
@@ -13,6 +14,9 @@ module.exports = function(app) {
 	app.get('/', controllers.root.root);
 	app.get('/status', controllers.root.status);
 
+	// user
+	app.get('/me', controllers.user.me);
+
 	// not found
 	app.use(function(req, res, next){
 		next(Error.NotFound());
@@ -20,7 +24,7 @@ module.exports = function(app) {
 
 	// handle errors
 	app.use(function(err, req, res, next){
-		Error.send(res, err);
+		Error.send(err, res);
 	});
 
 	return controllers;

@@ -12,6 +12,7 @@ spot.lib      = require('./lib');
 spot.database = require('./database');
 spot.models   = require('./models');
 spot.services = require('./services');
+spot.auth     = require('./authorization');
 
 // Web application server
 exports.server = function(next) {

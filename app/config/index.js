@@ -21,7 +21,7 @@ var dev = {
         DEV: true,
         LOCAL: false
     },
-    db: process.env.DB,
+    db: 'mongodb://localhost/spot-local',
     twilio: {
         sid: 'AC444de0a850e8d0e457e3f8ae5b9e332b',
         token: '1dc58f02c00de870bbfd553826c7bf56',
