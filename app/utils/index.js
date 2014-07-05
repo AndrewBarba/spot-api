@@ -28,7 +28,7 @@ exports.loadFiles = function(dir, param) {
         files[keyName] = (param) ? require(dir + '/' + name)(param) : require(dir + '/' + name);
     });
     return files;
-}
+};
 
 exports.randomHex = function (x) {
     var num = Math.ceil(x/2);
@@ -36,7 +36,7 @@ exports.randomHex = function (x) {
     var buf = crypto.pseudoRandomBytes(num);
     var hexVal = buf.toString('hex');
     return (odd) ? hexVal.substring(1) : hexVal;
-}
+};
 
 exports.randomNumberString = function(x) {
     var ans = '';
@@ -44,26 +44,26 @@ exports.randomNumberString = function(x) {
         ans += Math.floor(Math.random() * 10);
     }
     return ans;
-}
+};
 
 exports.guid = function(x) {
     if (!x) x = 8;
     var s = "";
     for (var i = 0; i < x/4; i++) s += _this.randomHex(4);
     return s;
-}
+};
 
 exports.objectId = function() {
     return _this.guid(24);
-}
+};
 
 exports.authToken = function() {
     return _this.guid(256);
-}
+};
 
 exports.isValidEmail = function(e) {
     return String(e).match(/^\s*[\w\-\+_]+(?:\.[\w\-\+_]+)*\@[\w\-\+_]+\.[\w\-\+_]+(?:\.[\w‌​\-\+_]+)*\s*$/);
-}
+};
 
 exports.setPhone = function(phone) {
     if (phone) {
@@ -73,7 +73,7 @@ exports.setPhone = function(phone) {
         }
     }
     return (phone && phone.length >= 10) ? phone : null;
-}
+};
 
 exports.verifyKeys = function(keys, object, next) {
     var error = null;
@@ -88,7 +88,15 @@ exports.verifyKeys = function(keys, object, next) {
         next(error, object);
     }
     return error;
-}
+};
+
+exports.ok = function(){
+    return { 
+        status: 'OK' 
+    };
+};
+
+exports.noop = function(){};
 
 // load all utils in this folder
 _.extend(module.exports, this.loadFiles(__dirname));

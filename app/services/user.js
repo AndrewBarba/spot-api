@@ -17,9 +17,14 @@ exports.userForAuth = function(token, next) {
 
 exports.userForPhone = function(phone, next) {
 	phone = utils.setPhone(phone);
+	if (!phone) {
+		return next(Error.BadRequest('Invalid phone number'));
+	}
+	
 	User
 		.findOne({ phone: phone })
 		.select('+phone')
+		.select('+verificationCode')
 		.exec(function(err, doc){
 			if (err) return next(err);
 			if (doc) return next(null, doc);

@@ -16,6 +16,7 @@ module.exports = function(app) {
 
 	// user
 	app.get('/me', controllers.user.me);
+	app.post('/user', controllers.user.initiateLogin);
 
 	// not found
 	app.use(function(req, res, next){
