@@ -27,7 +27,7 @@
     },
 
     "scripts": {
-        "start": "node process/server-cluster.js",
+        "start": "node process/server.js",
         "test": "mocha --timeout 120000"
     },
 

@@ -29,11 +29,15 @@ spot.models = require('./models');
 spot.services = require('./services');
 
 // Web application server
-exports.server = function() {
-	spot.database(function(){
+exports.server = function(next) {
+
+	spot.log('Starting application server...');
+	
+	spot.database(function(err){
+		if (err) throw err;
 		
 		// start the server
-		var server = require('./server')();
+		var server = require('./server')(next);
 		
 		// init controllers
 		var controllers = require('./controllers')(server.app);
@@ -45,7 +49,11 @@ exports.server = function() {
 
 // Jobs server
 exports.jobs = function() {
-	spot.database(function(){
+
+	spot.log('Starting jobs server...');
+
+	spot.database(function(err){
+		if (err) throw err;
 
 		// start jobs server
 		var jobs = require('./jobs');

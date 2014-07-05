@@ -14,8 +14,12 @@ module.exports = function(next) {
 
     // Start the server
     server.listen(port, function() {
+        
         spot.log('Listening on port: '+port);
-        if (next) next(app);
+        
+        if (next) {
+            next(app);
+        }
     });
 
     return {
