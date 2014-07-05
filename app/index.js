@@ -7,6 +7,9 @@ spot = {};
 // logging
 spot.log = console.log;
 
+// info
+spot.info = require('../package');
+
 // config
 spot.config = require('./config');
 

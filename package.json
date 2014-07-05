@@ -16,6 +16,7 @@
         "forky": "0.1.x",
         "mongoose": "3.8.x",
         "multer": "0.1.x",
+        "response-time": "2.0.x",
         "twilio": "1.6.x",
         "underscore": "1.6.x",
         "ws": "0.4.x"

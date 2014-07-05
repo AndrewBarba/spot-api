@@ -3,10 +3,7 @@ var mongoose = require('mongoose')
   , Error = spot.error;
 
 exports.root = function(req, res, next) {
-    res.json({ 
-        'name': 'spot-api', 
-        'time': Date.now() 
-    });
+    res.json(spot.info);
 }
 
 exports.status = function(req, res, next) {

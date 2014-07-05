@@ -1,3 +1,4 @@
+process.env.NODE_ENV = 'local';
 
 var should = require('should');
 

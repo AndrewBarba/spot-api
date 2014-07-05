@@ -19,4 +19,12 @@ var request = require('supertest')
  				.expect(200, done);
  		});
  	});
+
+ 	describe('/fake', function(){
+ 		it('should return a 404 Not found', function(done){
+ 			server
+ 				.get('/fake')
+ 				.expect(404, done);
+ 		});
+ 	});
  });
