@@ -48,5 +48,7 @@ exports.server = function() {
 exports.jobs = function() {
 	spot.database(function(){
 
+		// start jobs server
+		var jobs = require('./jobs');
 	});
 };
