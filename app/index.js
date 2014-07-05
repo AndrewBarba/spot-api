@@ -2,33 +2,15 @@
 var _ = require('underscore');
 
 // GLOBAL
-spot = {};
-
-// logging
-spot.log = console.log;
-
-// info
-spot.info = require('../package');
-
-// config
-spot.config = require('./config');
-
-// errors
-spot.error = require('./errors');
-
-// utlities
-spot.utils = require('./utils');
-
-// libs
-spot.lib = require('./lib');
-
-// database
+spot          = {};
+spot.log      = console.log;
+spot.info     = require('../package');
+spot.config   = require('./config');
+spot.error    = require('./errors');
+spot.utils    = require('./utils');
+spot.lib      = require('./lib');
 spot.database = require('./database');
-
-// models
-spot.models = require('./models');
-
-// services
+spot.models   = require('./models');
 spot.services = require('./services');
 
 // Web application server
