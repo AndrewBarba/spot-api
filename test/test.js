@@ -6,9 +6,10 @@ describe('Spot', function(){
 		require('../app').server(function(app){
 
 			should.exist(app);
-			
+
 			// load tests
 			require('./controllers');
+			require('./jobs');
 
 			done();
 		});
