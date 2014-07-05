@@ -10,3 +10,6 @@ jobs:
 
 jobs-cluster:
 	node process/jobs-cluster.js
+
+updates:
+	npm outdated --depth 0
