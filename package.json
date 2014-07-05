@@ -3,6 +3,7 @@
     "version": "0.0.1",
     "description": "Node.js backend for Spot",
     "url": "http://api.example.com/",
+    "author": "Andrew Barba",
 
     "engines" : {
         "node" : "0.10.29"
@@ -29,7 +30,5 @@
     "scripts": {
         "start": "node process/server.js",
         "test": "mocha --timeout 120000"
-    },
-
-    "author": "Andrew Barba"
+    }
 }
