@@ -1,6 +1,5 @@
 
-var _ = require('underscore')
-  , async = require('async');
+var _ = require('underscore');
 
 // GLOBAL
 spot = {};
