@@ -10,6 +10,7 @@ exports.userForAuth = function(token, next) {
 		.populate('user')
 		.exec(function(err, doc){
 			if (err) return next(err);
+			if (!doc) return next(Error.UnAuthorized());
 			next(null, doc.user);
 		});
 }
