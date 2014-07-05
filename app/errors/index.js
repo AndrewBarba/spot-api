@@ -1,17 +1,16 @@
 
-function error(statusCode, message) {
-    var error = new Error(message || 'Server error');
-    error.statusCode = statusCode;
-    return error;
-}
+// SEND ERRORS
 
 exports.send = function(res, error) {
     var statusCode = error.statusCode || 500;
+    var message = error.message || 'Server error';
     res.json(statusCode, {
-        statusCode: statusCode,
-        error: error.message
+        status: statusCode,
+        error: message
     });
 }
+
+// CREATE ERRORS
 
 exports.ServerError = function(message) {
     return error(500, message || 'Server error');
@@ -27,4 +26,12 @@ exports.UnAuthorized = function(message) {
 
 exports.NotFound = function(message) {
     return error(404, message || 'Not found');
+}
+
+// Constructor
+
+function error(statusCode, message) {
+    var error = new Error(message || 'Server error');
+    error.statusCode = statusCode;
+    return error;
 }
