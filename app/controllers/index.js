@@ -14,8 +14,11 @@ module.exports = function(app) {
 	app.get('/', controllers.root.root);
 	app.get('/status', controllers.root.status);
 
-	// user
+	// me
 	app.get('/me', controllers.user.me);
+	app.put('/me', auth.user.user, controllers.user.update);
+
+	// user
 	app.post('/user', controllers.user.initiateLogin);
 	app.post('/user/verify', controllers.user.verifyUser);
 

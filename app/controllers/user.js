@@ -68,3 +68,16 @@ exports.verifyUser = function(req, res, next) {
 	});
 }
 
+exports.update = function(req, res, next) {
+	var ALLOWED_UPDATES = [ 'firstName', 'lastName', 'imageUrl' ];
+
+	var userId = res.get('spot-user');
+	var update = utils.select(ALLOWED_UPDATES, req.body);
+	update.modified = new Date();
+	
+	User.findByIdAndUpdate(userId, update, function(err, user){
+		if (err) return next(err);
+		res.json(user);
+	});
+}
+

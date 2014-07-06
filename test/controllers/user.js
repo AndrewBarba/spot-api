@@ -6,6 +6,8 @@ var request = require('supertest')
   , utils = spot.utils;
 
 var user1 = {
+	firstName: 'Andrew',
+	lastName: 'Barba',
 	phone: '9085667524',
 	auth: ''
 }
@@ -77,5 +79,22 @@ var user1 = {
  					done();
  				});
  		});
+
+ 		it('should update the current user', function(done){
+ 			server
+ 				.put('/me')
+ 				.query({ auth: user1.auth })
+ 				.send(user1)
+ 				.expect(200)
+ 				.end(function(err, res){
+ 					should.not.exist(err);
+ 					should.exist(res);
+ 					should.exist(res.body.firstName);
+ 					res.body.firstName.should.equal(user1.firstName);
+ 					res.body.lastName.should.equal(user1.lastName);
+ 					res.body.created.should.not.equal(res.body.modified);
+ 					done();
+ 				});
+ 		})
  	});
  });

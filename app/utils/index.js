@@ -94,6 +94,17 @@ exports.verifyKeys = function(keys, object, next) {
     return error;
 };
 
+exports.select = function(keys, object) {
+    var data = {};
+    _.each(keys, function(key){
+        var val = object[key];
+        if (val) {
+            data[key] = val;
+        }
+    });
+    return data;
+}
+
 exports.ok = function(){
     return { 
         status: 'OK' 
