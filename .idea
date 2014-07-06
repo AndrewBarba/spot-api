@@ -1,0 +1,38 @@
+
+// USER
+{
+	firstName : String,
+	lastName  : String,
+	imageUrl  : String, // profile picture
+	phone     : String
+}
+
+// GROUP
+{
+	user     : User,
+	priority : Number,
+	name     : String
+}
+
+// RELATIONSHIP
+{
+	from     : User,
+	to       : User,
+	group    : Group,
+	nickname : String
+}
+
+// SPOT
+{
+	user     : User,
+	group    : Group,
+	message  : String,
+	location : [ Number, Number ] // longitude, latitude
+}
+
+// SPOT COMMENT
+{
+	spot: Spot,
+	user: User,
+	message: String
+}
