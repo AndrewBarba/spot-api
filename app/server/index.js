@@ -15,10 +15,7 @@ module.exports = function(next) {
     app.use(bodyParser.urlencoded({ extended: true })); 
 
     // Start the server
-    server.listen(port, function() {
-        
-        spot.log('Listening on port: '+port);
-        
+    server.listen(port, function() {        
         if (next) {
             next(app);
         }
@@ -26,7 +23,8 @@ module.exports = function(next) {
 
     return {
         app: app,
-        server: server
+        server: server,
+        port: port
     }
 }
 

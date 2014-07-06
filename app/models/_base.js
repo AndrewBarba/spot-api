@@ -50,13 +50,11 @@ function getSchema(data, options) {
 }
 
 exports.extend = function(data, options) {
-    var schema = getSchema(data, options);
-    return schema;
+    return getSchema(data, options);
 }
 
-exports.cappedSchema = function(data, size, options) {
-    var schema = getSchema(data, _.extend({capped:size}, options));
-    return schema;
+exports.extendCapped = function(size, data, options) {
+    return getSchema(data, _.extend({capped:size}, options));
 }
 
 /* =========================================================================

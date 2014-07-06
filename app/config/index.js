@@ -5,7 +5,7 @@ var prod = {
     env: {
         PROD: true,
         DEV: false,
-        LOCAL: false
+        TEST: false
     },
     db: process.env.DB,
     twilio: {
@@ -19,7 +19,7 @@ var dev = {
     env: {
         PROD: false,
         DEV: true,
-        LOCAL: false
+        TEST: false
     },
     db: 'mongodb://localhost/spot-local',
     twilio: {
@@ -33,7 +33,7 @@ var local = _.extend({}, dev, {
     env: {
         PROD: false,
         DEV: false,
-        LOCAL: true
+        TEST: true
     },
     db: 'mongodb://localhost/spot-local',
 });
@@ -41,7 +41,7 @@ var local = _.extend({}, dev, {
 var config = {
     'production': prod,
     'development': dev,
-    'local': local
+    'test': local
 }
 
 var env = process.env.NODE_ENV || 'development';

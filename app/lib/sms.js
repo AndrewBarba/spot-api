@@ -6,7 +6,7 @@ var twilio = require('twilio')
 var LOCAL_TEXTS = {};
 
 exports.sendText = function(phone, message, next) {
-    if (!config.env.LOCAL) {
+    if (!config.env.TEST) {
         client.sms.messages.create({
             from: config.twilio.number,
             to: phone,

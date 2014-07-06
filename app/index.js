@@ -10,18 +10,23 @@ spot.error    = require('./errors');
 spot.utils    = require('./utils')
 spot.lib      = require('./lib');
 spot.database = require('./database');
-spot.models   = require('./models');
-spot.services = require('./services');
-spot.auth     = require('./authorization');
+
+function init() {
+	spot.models   = require('./models');
+	spot.services = require('./services');
+	spot.auth     = require('./authorization');
+}
 
 // Web application server
-exports.server = function(next) {
+exports.server = function(next, options) {
+	options = options || {};
 
-	spot.log('Starting application server...');
-	
 	spot.database(function(err){
 		if (err) throw err;
 		
+		// load dependencies
+		init();
+
 		// start the server
 		var server = require('./server')(next);
 		
@@ -30,18 +35,24 @@ exports.server = function(next) {
 
 		// add server to global
 		_.extend(spot, server);
-	});
+	}, options.database);
+
+	spot.log('SPOT WEB SERVER\n');
 };
 
 // Jobs server
-exports.jobs = function() {
-
-	spot.log('Starting jobs server...');
+exports.jobs = function(next, options) {
+	options = options || {};
 
 	spot.database(function(err){
 		if (err) throw err;
 
+		// load dependencies
+		init();
+
 		// start jobs server
 		var jobs = require('./jobs');
-	});
+	}, options.database);
+
+	spot.log('SPOT JOBS SERVER\n');
 };

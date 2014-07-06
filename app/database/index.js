@@ -3,7 +3,8 @@ var mongoose = require('mongoose')
   , config = spot.config
   , utils = spot.utils;
 
-module.exports = function(onConnect, onDisconnect) {
+module.exports = function(onConnect, options) {
+    options = options || {};
 
     // connection options
     var dbOptions = {
@@ -14,22 +15,12 @@ module.exports = function(onConnect, onDisconnect) {
 
     // connect to database
     mongoose.connect(config.db, dbOptions, function(err){
-        
-        if (err) {
-            spot.log('Failed to connect to database');
-        } else {
-            spot.log('Connected to database');
-        }
-
-        if (onConnect) {
+        if (options.dropDatabase) {
+            mongoose.connection.db.dropDatabase(onConnect);
+        } else {    
             onConnect(err);
         }
     });
-
-    // handle disconnect
-    if (onDisconnect) {
-        mongoose.connection.on('disconnected', onDisconnect);
-    }
 
     return mongoose;
 }

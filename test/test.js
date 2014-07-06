@@ -1,4 +1,4 @@
-process.env.NODE_ENV = 'local';
+process.env.NODE_ENV = 'test';
 
 var should = require('should')
   , mongoose = require('mongoose');
@@ -9,15 +9,13 @@ describe('Spot', function(){
 
 			should.exist(app);
 
-			// clear database
-			mongoose.connection.db.dropDatabase(function(){
-				
-				// load tests
-				require('./controllers');
-				require('./jobs');
+			// load tests
+			require('./controllers');
+			require('./jobs');
 
-				done();
-			});
+			done();
+		}, {
+			database: { dropDatabase: true }
 		});
 	});
 });
