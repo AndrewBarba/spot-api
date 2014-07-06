@@ -1,6 +1,7 @@
 process.env.NODE_ENV = 'local';
 
-var should = require('should');
+var should = require('should')
+  , mongoose = require('mongoose');
 
 describe('Spot', function(){
 	it('should load the app', function(done){
@@ -8,11 +9,15 @@ describe('Spot', function(){
 
 			should.exist(app);
 
-			// load tests
-			require('./controllers');
-			require('./jobs');
+			// clear database
+			mongoose.connection.db.dropDatabase(function(){
+				
+				// load tests
+				require('./controllers');
+				require('./jobs');
 
-			done();
+				done();
+			});
 		});
 	});
 });

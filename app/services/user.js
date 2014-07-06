@@ -7,11 +7,19 @@ var utils = spot.utils
 exports.userForAuth = function(token, next) {
 	Auth
 		.findOne({ token: token, valid: true })
-		.populate('user')
+		.select('user')
 		.exec(function(err, doc){
 			if (err) return next(err);
 			if (!doc) return next(Error.UnAuthorized());
-			next(null, doc.user);
+			
+			User
+				.findById(doc.user) 
+				.select('+phone')
+				.exec(function(err, user){
+					if (err) return next(err);
+					if (!doc) return next(Error.BadRequest('Could not find user with _id: '+doc.user));
+					next(null, user);
+				});
 		});
 }
 

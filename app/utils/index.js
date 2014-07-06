@@ -28,7 +28,7 @@ exports.loadFiles = function(dir, param) {
         files[keyName] = (param) ? require(dir + '/' + name)(param) : require(dir + '/' + name);
     });
     return files;
-};
+}
 
 exports.randomHex = function (x) {
     var num = Math.ceil(x/2);
@@ -65,9 +65,13 @@ exports.isValidEmail = function(e) {
     return String(e).match(/^\s*[\w\-\+_]+(?:\.[\w\-\+_]+)*\@[\w\-\+_]+\.[\w\-\+_]+(?:\.[\w‌​\-\+_]+)*\s*$/);
 };
 
+exports.extractNumberString = function(text) {
+    return text ? text.replace(/\D/g,'').trim() : '';
+}
+
 exports.setPhone = function(phone) {
     if (phone) {
-        phone = phone.replace(/\D/g,'').trim();
+        phone = exports.extractNumberString(phone);
         if (phone.length == 11 && phone.slice(0,1) == "1") {
             phone = phone.slice(1);
         }

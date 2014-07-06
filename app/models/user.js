@@ -19,18 +19,18 @@ _.extend(UserSchema.statics, {
 // instance methods
 _.extend(UserSchema.methods, {
 	ensureVerificationCode: function(next) {
-		if (self.verificationCode) {
-			next(null, self);
+		if (this.verificationCode) {
+			next(null, this);
 		} else {
-			self.verificationCode = verificationCode();
-			self.save(next);
+			this.verificationCode = verificationCode();
+			this.save(next);
 		}
 	}
 });
 
 // HELPERS
 function verificationCode() {
-	return utils.randomHex(6);
+	return utils.randomNumberString(6);
 }
 
 var User = mongoose.model('User', UserSchema);

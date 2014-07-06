@@ -30,4 +30,6 @@ module.exports = function(onConnect, onDisconnect) {
     if (onDisconnect) {
         mongoose.connection.on('disconnected', onDisconnect);
     }
+
+    return mongoose;
 }
