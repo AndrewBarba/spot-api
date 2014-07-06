@@ -31,14 +31,11 @@ describe('Spot', function(){
 	});
 
 	it('should populate auth tokens', function(done){
-		var auths = [];
+		var auths = {};
 		async.each(spot.test.users, function(user, next){
 			spot.services.auth.authForUser(user, function(err, auth){
 				should.not.exist(err);
-				auths.push({
-					user: user.id,
-					token: auth.token
-				});
+				auths[user.id] = auth.token;
 				next();
 			});
 		}, function(){
