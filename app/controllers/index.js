@@ -22,6 +22,10 @@ module.exports = function(app) {
 	app.post('/user', controllers.user.initiateLogin);
 	app.post('/user/verify', controllers.user.verifyUser);
 
+	// groups
+	app.post('/group', auth.user.user, controllers.group.create);
+	app.put('/group/:id', auth.user.user, controllers.group.update);
+
 	// not found
 	app.use(function(req, res, next){
 		next(Error.NotFound());

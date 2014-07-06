@@ -40,11 +40,27 @@ function getSchema(data, options) {
         next();
     });
 
-    _.extend(schema.methods, {
-        getHiddenKeys: function() {
-            return []; // override
+    // STATICS
+    schema.statics.spot = function() {
+        var self = this;
+        
+        return {
+            findByIdAndUpdate: function(id, update, callback) {
+                update.modified = new Date();
+                self.findByIdAndUpdate(id, update, callback);
+            },
+
+            findOneAndUpdate: function(query, update, callback) {
+                update.modified = new Date();
+                self.findOneAndUpdate(query, update, callback);
+            }
         }
-    });
+    }
+
+    // METHODS
+    schema.methods.getHiddenKeys = function() {
+        return []; // override
+    }
 
     return schema;
 }

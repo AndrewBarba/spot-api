@@ -58,7 +58,7 @@ exports.objectId = function() {
 };
 
 exports.authToken = function() {
-    return _this.guid(256);
+    return _this.guid(128);
 };
 
 exports.isValidEmail = function(e) {

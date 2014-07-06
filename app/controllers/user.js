@@ -71,13 +71,13 @@ exports.verifyUser = function(req, res, next) {
 exports.update = function(req, res, next) {
 	var ALLOWED_UPDATES = [ 'firstName', 'lastName', 'imageUrl' ];
 
-	var userId = res.get('spot-user');
-	var update = utils.select(ALLOWED_UPDATES, req.body);
-	update.modified = new Date();
+	var userId = UserService.userId(res);
+	var data = utils.select(ALLOWED_UPDATES, req.body);
 	
-	User.findByIdAndUpdate(userId, update, function(err, user){
+	User.spot().findByIdAndUpdate(userId, data, function(err, doc){
 		if (err) return next(err);
-		res.json(user);
+		if (!doc) return next(Error.NotFound('Could not find user with id: '+userId));
+		res.json(doc);
 	});
 }
 

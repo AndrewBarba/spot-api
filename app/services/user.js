@@ -50,3 +50,7 @@ exports.verifyUser = function(user, code, next) {
 		next(Error.BadRequest('Invalid verification code'));
 	}
 }
+
+exports.userId = function(res) {
+	return res.get('spot-user');
+}
