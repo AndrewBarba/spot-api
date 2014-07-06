@@ -23,9 +23,9 @@ describe('Spot', function(){
 				phone: i + spot.utils.randomNumberString(10)
 			});
 		}
-		spot.models.user.create(users, function(err, users){
+		spot.models.user.create(users, function(err){
 			should.not.exist(err);
-			spot.test.users = users;
+			spot.test.users = _.values(arguments).slice(1);
 			done();
 		});
 	});
