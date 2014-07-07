@@ -89,10 +89,14 @@ exports.updateCurrent = function(req, res, next) {
  * Find users with phone number
  */
 exports.find = function(req, res, next) {
-	var phones = _.map(req.body.phones, utils.setPhone);
-	UserService.usersWithPhones(phones, function(err, users){
+	utils.verifyKeys(['phones'], req.body, function(err, body){
 		if (err) return next(err);
-		res.json(users);
+
+		var phones = _.map(body.phones, utils.setPhone);
+		UserService.usersWithPhones(phones, function(err, users){
+			if (err) return next(err);
+			res.json(users);
+		});
 	});
 }
 

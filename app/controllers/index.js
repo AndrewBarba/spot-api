@@ -21,9 +21,10 @@ module.exports = function(app) {
 	// user
 	app.post('/user', controllers.user.initiateLogin);
 	app.post('/user/verify', controllers.user.verifyUser);
-	app.post('/user/find/phone', auth.user.user, controllers.user.find);
+	app.post('/user/find', auth.user.user, controllers.user.find);
 
 	// groups
+	app.get('/group', auth.user.user, controllers.group.fetch);
 	app.post('/group', auth.user.user, controllers.group.create);
 	app.put('/group/:id', auth.user.user, controllers.group.update);
 

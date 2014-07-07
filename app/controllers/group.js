@@ -6,6 +6,19 @@ var utils = spot.utils
   , GroupService = spot.services.group;
 
 /**
+ * Fetch groups for current user
+ */
+exports.fetch = function(req, res, next) {
+	Group
+		.find({ user: UserService.userId(res) })
+		.select('-user')
+		.exec(function(err, docs){
+			if (err) return next(err);
+			res.json(docs);
+		});
+}
+
+/**
  * Create a new Group
  */
 exports.create = function(req, res, next) {
