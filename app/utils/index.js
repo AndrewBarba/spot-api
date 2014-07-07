@@ -105,6 +105,41 @@ exports.select = function(keys, object) {
     return data;
 }
 
+exports.asyncStream = function(query, onData, onComplete) {
+
+    var ops = 0;
+    var ended = false;
+
+    var stream = query.stream();
+
+    stream.on('data', function(doc){
+        ops++;
+        onData(doc, function(){
+            ops--;
+            if (ops == 0 && ended) {
+                onComplete();
+            }
+        });
+    });
+
+    stream.on('end', function(){
+        ended = true;
+        if (ops == 0) {
+            onComplete();
+        }
+    });
+}
+
+exports.stream = function(query, onData, onComplete) {
+    exports.asyncStream(
+        query, 
+        function(doc, next){
+            onData(doc);
+            next();
+        }, 
+        onComplete);
+}
+
 exports.ok = function(){
     return { 
         status: 'OK' 

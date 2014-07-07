@@ -7,6 +7,7 @@ var RelationshipSchema = model.extend({
 	from: { type: String, ref: 'User', requried: true, index: true },
 	to: { type: String, ref: 'User', requried: true, index: true },
 	group: { type: String, ref: 'Group', index: { sparse: true }},
+	blocked: { type: Boolean, default: false },
 	nickname: { type: String }
 });
 

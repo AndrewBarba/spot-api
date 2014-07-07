@@ -51,6 +51,31 @@ exports.verifyUser = function(user, code, next) {
 	}
 }
 
+exports.usersWithPhones = function(phones, next) {
+	User
+		.find({ phone: { $in: phones }})
+		.exec(next);
+}
+
 exports.userId = function(res) {
 	return res.get('spot-user');
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

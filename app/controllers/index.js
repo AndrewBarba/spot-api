@@ -16,15 +16,20 @@ module.exports = function(app) {
 
 	// me
 	app.get('/me', controllers.user.me);
-	app.put('/me', auth.user.user, controllers.user.update);
+	app.put('/me', auth.user.user, controllers.user.updateCurrent);
 
 	// user
 	app.post('/user', controllers.user.initiateLogin);
 	app.post('/user/verify', controllers.user.verifyUser);
+	app.post('/user/find/phone', auth.user.user, controllers.user.find);
 
 	// groups
 	app.post('/group', auth.user.user, controllers.group.create);
 	app.put('/group/:id', auth.user.user, controllers.group.update);
+
+	// relationships
+	app.get('/relationship', auth.user.user, controllers.relationship.fetch);
+	app.post('/relationship', auth.user.user, controllers.relationship.create);
 
 	// not found
 	app.use(function(req, res, next){

@@ -3,7 +3,8 @@ var utils = spot.utils
   , Error = spot.error
   , User = spot.models.user
   , UserService = spot.services.user
-  , AuthService = spot.services.auth;
+  , AuthService = spot.services.auth
+  , _ = require('underscore');
 
 /**
  * Gets the current user
@@ -68,7 +69,10 @@ exports.verifyUser = function(req, res, next) {
 	});
 }
 
-exports.update = function(req, res, next) {
+/**
+ * Updates the current user
+ */
+exports.updateCurrent = function(req, res, next) {
 	var ALLOWED_UPDATES = [ 'firstName', 'lastName', 'imageUrl' ];
 
 	var userId = UserService.userId(res);
@@ -80,4 +84,43 @@ exports.update = function(req, res, next) {
 		res.json(doc);
 	});
 }
+
+/**
+ * Find users with phone number
+ */
+exports.find = function(req, res, next) {
+	var phones = _.map(req.body.phones, utils.setPhone);
+	UserService.usersWithPhones(phones, function(err, users){
+		if (err) return next(err);
+		res.json(users);
+	});
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
