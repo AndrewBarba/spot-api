@@ -9,6 +9,8 @@ var utils = spot.utils
 exports.formRelationships = function(from, to, group, next) {
 	
 	var contacts = _.indexBy(to, 'user');
+	delete contacts[from];
+
 	var userIds = Object.keys(contacts);
 
 	var query = Relationship.find({ from: from, to: {  $in: userIds }});

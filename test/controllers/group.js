@@ -87,7 +87,7 @@ var group1 = {
  				.end(function(err, res){
  					should.not.exist(err);
  					should.exist(res);
- 					res.body.length.should.equal(1);
+ 					res.body.length.should.not.equal(0);
  					done();
  				});
  		});

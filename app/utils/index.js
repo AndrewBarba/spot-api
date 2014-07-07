@@ -38,10 +38,14 @@ exports.randomHex = function (x) {
     return (odd) ? hexVal.substring(1) : hexVal;
 };
 
+exports.randomNumber = function(max) {
+    return Math.floor(Math.random() * max);
+}
+
 exports.randomNumberString = function(x) {
     var ans = '';
     for (var i = 0; i < x; i++) {
-        ans += Math.floor(Math.random() * 10);
+        ans += exports.randomNumber(10);
     }
     return ans;
 };

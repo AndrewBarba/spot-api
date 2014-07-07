@@ -42,6 +42,26 @@ describe('Spot', function(){
 		});
 	});
 
+	it('should populate groups', function(done){
+		spot.test.groups = {};
+		async.each(spot.test.users, function(user, next){
+			var groups = [];
+			_.times(5, function(i){
+				groups.push({
+					user: user.id,
+					name: spot.utils.randomHex(10),
+					priority: spot.utils.randomNumber(10)
+				});
+			});
+			spot.models.group.create(groups, function(err){
+				should.not.exist(err);
+				var docs = _.values(arguments).slice(1);
+				spot.test.groups[user.id] = docs;
+				next();
+			});
+		}, done);
+	});
+
 	it('should run tests', function(done){
 		require('./controllers');
 		require('./jobs');
