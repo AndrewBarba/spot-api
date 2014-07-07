@@ -35,7 +35,7 @@ var local = _.extend({}, dev, {
         DEV: false,
         TEST: true
     },
-    db: 'mongodb://localhost/spot-local',
+    db: 'mongodb://' +  (process.env.WERCKER_MONGODB_HOST || 'localhost') + '/spot-local',
 });
 
 var config = {
