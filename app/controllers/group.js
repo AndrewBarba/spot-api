@@ -29,11 +29,11 @@ exports.update = function(req, res, next) {
 	var groupId = req.params.id;
 	var userId = UserService.userId(res);
 	var query = { _id: groupId, user: userId };
-	var data = utils.select(ALLOWED_KEYS, req.body);
+	var update = utils.select(ALLOWED_KEYS, req.body);
 
-	Group.spot().findOneAndUpdate(query, data, function(err, doc){
+	Group.spot().findOneAndUpdate(query, update, function(err, doc){
 		if (err) return next(err);
-		if (!doc) return next(Error.NotFound('Could not find your group with id: '+groupId));
+		if (!doc) return next(Error.NotFound('Could not find your group with id: ' + groupId));
 		res.json(doc);
 	});
 }

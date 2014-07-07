@@ -30,6 +30,7 @@ module.exports = function(app) {
 	// relationships
 	app.get('/relationship', auth.user.user, controllers.relationship.fetch);
 	app.post('/relationship', auth.user.user, controllers.relationship.create);
+	app.put('/relationship/:id', auth.user.user, controllers.relationship.update);
 
 	// not found
 	app.use(function(req, res, next){

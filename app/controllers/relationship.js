@@ -41,3 +41,42 @@ exports.create = function(req, res, next) {
 		});
 	});
 }
+
+/**
+ * Update a relationship
+ */
+exports.update = function(req, res, next) {
+	var ALLOWED_UPDATES = [ 'blocked', 'nickname', 'group' ];
+
+	var relId = req.params.id;
+	var userId = UserService.userId(res);
+	var query = { _id: relId, from: userId };
+	var update = utils.select(ALLOWED_UPDATES, req.body);
+
+	Relationship.spot().findAndUpdate(query, update, function(err, doc){
+		if (err) return next(err);
+		if (!doc) return next(Error.NotFound('Could not find your relationship with id: ' + relId));
+		res.json(doc);
+	});
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -76,11 +76,11 @@ exports.updateCurrent = function(req, res, next) {
 	var ALLOWED_UPDATES = [ 'firstName', 'lastName', 'imageUrl' ];
 
 	var userId = UserService.userId(res);
-	var data = utils.select(ALLOWED_UPDATES, req.body);
+	var update = utils.select(ALLOWED_UPDATES, req.body);
 	
-	User.spot().findByIdAndUpdate(userId, data, function(err, doc){
+	User.spot().findByIdAndUpdate(userId, update, function(err, doc){
 		if (err) return next(err);
-		if (!doc) return next(Error.NotFound('Could not find user with id: '+userId));
+		if (!doc) return next(Error.NotFound('Could not find user with id: ' + userId));
 		res.json(doc);
 	});
 }
