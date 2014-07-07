@@ -18,7 +18,7 @@ describe('Spot', function(){
 
 	it('should populate users', function(done){
 		var users = [];
-		_.times(5, function(i){
+		_.times(25, function(i){
 			users.push({
 				phone: i + spot.utils.randomNumberString(10)
 			});

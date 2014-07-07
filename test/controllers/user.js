@@ -3,7 +3,8 @@ var request = require('supertest')
   , server = request(spot.app)
   , should = require('should')
   , SMS = spot.lib.sms
-  , utils = spot.utils;
+  , utils = spot.utils
+  , _ = require('underscore');
 
 var user1 = {
 	firstName: 'Andrew',
@@ -97,4 +98,40 @@ var user1 = {
  				});
  		})
  	});
+
+	describe('/user/find', function(){
+		it('should find existing users', function(done){
+			var users = spot.test.users;
+			var phones = _.pluck(users, 'phone');
+			server
+				.post('/user/find')
+				.query({ auth: user1.auth })
+				.send({ phones: phones })
+				.expect(200)
+				.end(function(err, res){
+					should.not.exist(err);
+					should.exist(res);
+					res.body.length.should.equal(users.length);
+					done();
+				});
+		});
+	});
  });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

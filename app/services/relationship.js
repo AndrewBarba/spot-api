@@ -8,7 +8,7 @@ var utils = spot.utils
 
 exports.formRelationships = function(from, to, group, next) {
 	
-	contacts = _.indexBy(to, 'user');
+	var contacts = _.indexBy(to, 'user');
 	var userIds = Object.keys(contacts);
 
 	var query = Relationship.find({ from: from, to: {  $in: userIds }});
@@ -39,8 +39,8 @@ exports.formRelationships = function(from, to, group, next) {
 				.populate('to')
 				.exec(function(err){
 					if (err) return next(err);
-					var relationships = _.slice(arguments, 1);
-					next(null, relationships);
+					var docs = _.values(arguments).slice(1);
+					next(null, docs);
 				});
 		});
 }

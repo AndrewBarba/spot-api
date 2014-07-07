@@ -87,7 +87,6 @@ var group1 = {
  				.end(function(err, res){
  					should.not.exist(err);
  					should.exist(res);
- 					console.log(res.body);
  					res.body.length.should.equal(1);
  					done();
  				});

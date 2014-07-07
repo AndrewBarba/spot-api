@@ -27,6 +27,7 @@ module.exports = function(app) {
 	app.get('/group', auth.user.user, controllers.group.fetch);
 	app.post('/group', auth.user.user, controllers.group.create);
 	app.put('/group/:id', auth.user.user, controllers.group.update);
+	app.get('/group/:id/relationship', auth.user.user, controllers.relationship.fetchForGroup);
 
 	// relationships
 	app.get('/relationship', auth.user.user, controllers.relationship.fetch);

@@ -3,6 +3,7 @@ var utils = spot.utils
   , Error = spot.error
   , User = spot.models.user
   , Relationship = spot.models.relationship
+  , Group = spot.models.group
   , UserService = spot.services.user
   , RelationshipService = spot.services.relationship
   , _ = require('underscore');
@@ -25,6 +26,25 @@ exports.fetch = function(req, res, next) {
 }
 
 /**
+ * Fetch all relationships in a given group
+ */
+exports.fetchForGroup = function(req, res, next) {
+	
+	var groupId = req.params.id;
+	var userId = UserService.userId(res);
+	var query = { group: groupId, from: userId  };
+
+	Relationship
+		.find(query)
+		.select('-from -group')
+		.popluate('to')
+		.exec(function(err, docs){
+			if (err) return next(err);
+			res.json(docs);
+		});
+}
+
+/**
  * Create/update relationships from current user to users
  */
 exports.create = function(req, res, next) {
@@ -35,7 +55,7 @@ exports.create = function(req, res, next) {
 		var users = body.users;
 		var group = body.group;
 
-		RelationshipService.formRelationships(form, users, group, function(err, rels){
+		RelationshipService.formRelationships(from, users, group, function(err, rels){
 			if (err) return next(err);
 			res.json(rels);
 		});
