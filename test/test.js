@@ -18,11 +18,11 @@ describe('Spot', function(){
 
 	it('should populate users', function(done){
 		var users = [];
-		for (var i = 0; i < 100; i++) {
+		_.times(5, function(i){
 			users.push({
 				phone: i + spot.utils.randomNumberString(10)
 			});
-		}
+		});
 		spot.models.user.create(users, function(err){
 			should.not.exist(err);
 			spot.test.users = _.values(arguments).slice(1);
@@ -31,15 +31,13 @@ describe('Spot', function(){
 	});
 
 	it('should populate auth tokens', function(done){
-		var auths = {};
-		async.each(spot.test.users, function(user, next){
-			spot.services.auth.authForUser(user, function(err, auth){
-				should.not.exist(err);
-				auths[user.id] = auth.token;
-				next();
-			});
-		}, function(){
-			spot.test.auths = auths;
+		var auths = _.map(spot.test.users, function(user){
+			return { user: user.id };
+		});
+		spot.models.auth.create(auths, function(err){
+			should.not.exist(err);
+			var docs = _.values(arguments).slice(1);
+			spot.test.auths = _.indexBy(docs, 'user');
 			done();
 		});
 	});
