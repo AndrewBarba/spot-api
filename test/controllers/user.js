@@ -120,7 +120,7 @@ var user1 = {
 	describe('/me/push create', function(){
 		it('should add a push token for user', function(done){
 
-			var push = { token: spot.utils.randomHex(20), type: 'ios' };
+			var push = { token: spot.utils.randomHex(64), type: 'ios' };
 
 			server
 				.put('/me/push')
@@ -131,7 +131,7 @@ var user1 = {
 					should.not.exist(err);
 					should.exist(res);
 					res.body.type.should.equal(push.type);
-					res.body.token.should.equal(push.token)
+					res.body.token.should.equal(push.token);
 					done();
 				});
 		});
