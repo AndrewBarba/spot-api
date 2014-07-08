@@ -20,6 +20,10 @@ describe('Spot', function(){
 		});
 	});
 
+	it('should load jobs', function(done){
+		require('../app').jobs(done);
+	});
+
 	it('should populate users', function(done){
 		var users = [];
 		_.times(USERS, function(i){

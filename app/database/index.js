@@ -3,8 +3,15 @@ var mongoose = require('mongoose')
   , config = spot.config
   , utils = spot.utils;
 
+var _connected = false;
+
 module.exports = function(onConnect, options) {
     options = options || {};
+
+    // check for current connection
+    if (_connected) {
+        return onConnect();
+    }
 
     // connection options
     var dbOptions = {
@@ -15,6 +22,8 @@ module.exports = function(onConnect, options) {
 
     // connect to database
     mongoose.connect(config.db, dbOptions, function(err){
+        _connected = !err;
+
         if (options.dropDatabase) {
             mongoose.connection.db.dropDatabase(onConnect);
         } else {    
