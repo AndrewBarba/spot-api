@@ -25,7 +25,7 @@
 // SPOT
 {
 	user     : User,
-	group    : Array<Group>,
+	group    : [ Group ],
 	message  : String,
 	location : [ Number, Number ] // longitude, latitude
 }
