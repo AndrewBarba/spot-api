@@ -12,7 +12,7 @@ exports.createSpot = function(userId, message, location, groupIds, next) {
 	Group.count({ user: userId, _id: { $in: groupIds }}, function(err, count){
 		if (err) return next(err);
 		if (count != groupIds.count) return next(Error.BadRequest('You cannot post to these groups'));
-
+		
 		Spot.create({
 			user: userId,
 			message: message,
