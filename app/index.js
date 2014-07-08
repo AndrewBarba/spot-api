@@ -1,12 +1,13 @@
 
 var _ = require('underscore')
-  , winston = require('winston');
+  , winston = require('winston')
+  , logger = logger('info');
 
 // GLOBAL
 spot          = {};
-spot.log      = console.log;
-spot.warn     = winston.warn;
-spot.err      = winston.error;
+spot.log      = logger.info;
+spot.warn     = logger.warn;
+spot.err      = logger.error;
 spot.info     = require('../package');
 spot.config   = require('./config');
 spot.error    = require('./errors');
@@ -59,3 +60,16 @@ exports.jobs = function(next, options) {
 
 	spot.log('SPOT JOBS SERVER\n');
 };
+
+// logger
+function logger(level) {
+    var transports = [new winston.transports.Console({
+        level: level || 'info',
+        colorize: true
+    })];
+
+    return new winston.Logger({
+        transports: transports
+    });
+}
+

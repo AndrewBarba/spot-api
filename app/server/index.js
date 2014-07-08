@@ -13,6 +13,7 @@ module.exports = function(next) {
     app.use(defaultHeaders);
     app.use(bodyParser.json());
     app.use(bodyParser.urlencoded({ extended: true })); 
+    app.use(log);
 
     // Start the server
     server.listen(port, function() {        
@@ -34,3 +35,13 @@ function defaultHeaders(req, res, next) {
     res.header('Pragma', 'no-cache');
     next();
 }
+
+function log(req, res, next) {
+    if (!spot.config.env.TEST) {
+        var path = req.url.split('?')[0];
+        spot.log(req.method, path, req.params, req.query, req.body);
+    }
+    next();
+}
+
+
