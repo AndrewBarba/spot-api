@@ -87,6 +87,23 @@ describe('Relationship', function(){
 				.expect(404, done);
 		});
 	});
+
+	describe('/relationship fetch', function(){
+		it('should fetch all relationships', function(done){
+			var userId = spot.test.users[1].id;
+			var auth = spot.test.auths[userId].token;
+
+			server
+				.get('/relationship')
+				.query({ auth: auth })
+				.end(function(err, res){
+					should.not.exist(err);
+					should.exist(res);
+					res.body.length.should.equal(spot.test.relationships[userId].length);
+					done();
+				});
+		});
+	});
 });
 
 
