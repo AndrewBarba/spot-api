@@ -69,7 +69,6 @@ var group1 = {
  					should.exist(res);
  					res.body.name.should.equal(body.name);
  					res.body.priority.should.equal(body.priority);
- 					res.body.user.should.not.equal(body.user);
  					done();
  				});
  		});

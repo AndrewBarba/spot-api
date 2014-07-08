@@ -17,7 +17,7 @@ exports.fetch = function(req, res, next) {
 	Relationship
 		.find({ from: userId })
 		.select('-from')
-		.populate('group user')
+		.populate('group to')
 		.sort('-created')
 		.exec(function(err, rels){
 			if (err) return next(err);
@@ -37,7 +37,7 @@ exports.fetchForGroup = function(req, res, next) {
 	Relationship
 		.find(query)
 		.select('-from -group')
-		.popluate('to')
+		.populate('to')
 		.exec(function(err, docs){
 			if (err) return next(err);
 			res.json(docs);

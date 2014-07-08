@@ -4,7 +4,7 @@ var mongoose = require('mongoose')
   , model = require('./_base');
 
 var GroupSchema = model.extend({
-	user: { type: String, ref: 'User', requried: true, index: true },
+	user: { type: String, ref: 'User', select: false, requried: true, index: true },
 	priority: { type: Number, default: 0, min: 0, required: true },
 	name: { type: String, required: true, trim: true }
 });

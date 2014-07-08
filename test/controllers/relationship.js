@@ -96,10 +96,28 @@ describe('Relationship', function(){
 			server
 				.get('/relationship')
 				.query({ auth: auth })
+				.expect(200)
 				.end(function(err, res){
 					should.not.exist(err);
 					should.exist(res);
 					res.body.length.should.equal(spot.test.relationships[userId].length);
+					done();
+				});
+		});
+
+		it('should fetch relationships for a group', function(done){
+			var userId = spot.test.users[0].id;
+			var groupId = spot.test.groups[userId][0].id;
+			var auth = spot.test.auths[userId].token;
+			
+			server
+				.get('/group/'+groupId+'/relationship')
+				.query({ auth: auth })
+				.expect(200)
+				.end(function(err, res){
+					should.not.exist(err);
+					should.exist(res);
+					res.body.length.should.not.equal(0);
 					done();
 				});
 		});
