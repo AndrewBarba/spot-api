@@ -34,6 +34,12 @@ module.exports = function(app) {
 	app.post('/relationship', auth.user.user, controllers.relationship.create);
 	app.put('/relationship/:id', auth.user.user, controllers.relationship.update);
 
+	// spot
+	app.get('/spot', auth.user.user, controllers.spot.fetchActive);
+	app.post('/spot', auth.user.user, controllers.spot.create);
+	app.post('/spot/:id/comment', auth.user.spot, controllers.spot.comment);
+	app.delete('/spot/:id', auth.user.user, controllers.spot.leave);
+
 	// not found
 	app.use(function(req, res, next){
 		next(Error.NotFound());

@@ -3,7 +3,10 @@ var utils = spot.utils
   , Auth = spot.models.auth
   , User = spot.models.user
   , Group = spot.models.group
+  , Relationship = spot.models.relationship
+  , Spot = spot.models.spot
   , UserService = spot.services.user
+  , SpotService = spot.services.spot
   , Error = spot.error;
 
 exports.user = function (req, res, next) {
@@ -18,7 +21,7 @@ exports.user = function (req, res, next) {
 				if (err) return next(err);
 				if (!doc) return next(Error.UnAuthorized());
 				res.set('spot-user', doc.user);
-				next();
+				next(null, doc.user);
 			});
 	});
 }
@@ -37,3 +40,35 @@ exports.group = function(req, res, next) {
 		});
 	});
 }
+
+exports.spot = function(req, res, next) {
+	exports.user(req, res, function(err, userId){
+		if (err) return next(err);
+		
+		Spot
+			.findById(req.params.id)
+			.select('groups')
+			.exec(function(err, doc){
+				if (err) return next(err);
+				if (!doc) return next(Error.NotFound());
+				
+
+				var query = { to: userId, group: { $in: doc.groups }};
+				Relationship.count(query, function(err, count){
+					if (err) return next(err);
+					if (!count) return next(Error.NotFound());
+					next();
+				});
+			});
+	});
+}
+
+
+
+
+
+
+
+
+
+

@@ -47,12 +47,12 @@ function getSchema(data, options) {
         return {
             findByIdAndUpdate: function(id, update, callback) {
                 update.modified = new Date();
-                self.findByIdAndUpdate(id, update, callback);
+                return self.findByIdAndUpdate(id, update, callback);
             },
 
             findOneAndUpdate: function(query, update, callback) {
                 update.modified = new Date();
-                self.findOneAndUpdate(query, update, callback);
+                return self.findOneAndUpdate(query, update, callback);
             }
         }
     }
