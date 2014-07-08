@@ -9,7 +9,7 @@ var request = require('supertest')
 describe('Spot', function(){
 
 	var userId = spot.test.users[0].id;
-	var auth = spot.test.auths[userId].token;
+	var auth = { auth: spot.test.auths[userId].token };
 
 	describe('/spot create', function(){
 
@@ -19,7 +19,7 @@ describe('Spot', function(){
 		it('should fetch all active spots', function(done){
 			server
 				.get('/spot')
-				.query({ auth: auth })
+				.query(auth)
 				.expect(200, function(err, res){
 					should.not.exist(err);
 					should.exist(res);
@@ -35,7 +35,7 @@ describe('Spot', function(){
 
 			server
 				.delete('/spot/'+spotId)
-				.query({ auth: auth })
+				.query(auth)
 				.expect(200)
 				.end(function(err, res){
 					should.not.exist(err);
@@ -45,4 +45,33 @@ describe('Spot', function(){
 				});
 		});
 	});
+
+	describe('/spot/:id/comment create', function(){
+		it('should post a comment to a spot', function(done){
+			var spotId = spot.test.spots[userId][0].id;
+			var comment = { comment: 'Hello, World' };
+
+			server
+				.post('/spot/'+spotId+'/comment')
+				.query(auth)
+				.send(comment)
+				.expect(200)
+				.end(function(err, res){
+					should.not.exist(err);
+					should.exist(res);
+					res.body.message.should.equal(comment.comment);
+					done();
+				});
+
+		});
+	});
 });
+
+
+
+
+
+
+
+
+
