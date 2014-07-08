@@ -47,10 +47,11 @@ describe('Spot', function(){
 	});
 
 	describe('/spot/:id/comment create', function(){
-		it('should post a comment to a spot', function(done){
-			var spotId = spot.test.spots[userId][0].id;
-			var comment = { comment: 'Hello, World' };
 
+		var spotId = spot.test.spots[userId][0].id;
+		var comment = { comment: 'Hello, World' };
+
+		it('should post a comment to a spot', function(done){
 			server
 				.post('/spot/'+spotId+'/comment')
 				.query(auth)
@@ -63,6 +64,19 @@ describe('Spot', function(){
 					done();
 				});
 
+		});
+
+		it('should fetch all comments', function(done){
+			server
+				.get('/spot/'+spotId+'/comment')
+				.query(auth)
+				.expect(200)
+				.end(function(err, res){
+					should.not.exist(err);
+					should.exist(res);
+					res.body[0].message.should.equal(comment.comment);
+					done();
+				});
 		});
 	});
 });
