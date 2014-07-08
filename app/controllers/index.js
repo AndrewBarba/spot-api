@@ -36,6 +36,7 @@ module.exports = function(app) {
 
 	// spot
 	app.get('/spot', auth.user.user, controllers.spot.fetchActive);
+	app.get('/spot/:id/comment', auth.user.spot, controllers.spot.getComments);
 	app.post('/spot', auth.user.user, controllers.spot.create);
 	app.post('/spot/:id/comment', auth.user.spot, controllers.spot.comment);
 	app.delete('/spot/:id', auth.user.spot, controllers.spot.leave);

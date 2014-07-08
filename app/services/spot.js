@@ -45,6 +45,16 @@ exports.fetchActiveSpots = function(userId, location, distance, next) {
 	});
 }
 
+exports.commentsForSpot = function(spotId, next) {
+	
+	Comment
+		.find({ spot: spotId })
+		.select('+user')
+		.populate('user')
+		.sort('created')
+		.exec(next);
+}
+
 exports.commentOnSpot = function(userId, spotId, message, next) {
 
 	Comment.create({

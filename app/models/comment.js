@@ -4,8 +4,8 @@ var mongoose = require('mongoose')
   , model = require('./_base');
 
 var CommentSchema = model.extend({
-	spot: { type: String, ref: 'Spot', required: true, index: true },
-	user: { type: String, ref: 'User' },
+	spot: { type: String, ref: 'Spot', select: false, required: true, index: true },
+	user: { type: String, ref: 'User', select: false },
 	message: { type: String, trim: true },
 });
 

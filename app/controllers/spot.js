@@ -61,6 +61,19 @@ exports.comment = function(req, res, next) {
 }
 
 /**
+ * Get all comments for a spot
+ */
+exports.getComments = function(req, res, next) {
+	
+	var spotId = req.params.id;
+
+	SpotService.commentsForSpot(spotId, function(err, comments){
+		if (err) return next(err);
+		res.json(comments);
+	});
+}
+
+/**
  * Leave a spot by setting it to inactive
  */
 exports.leave = function(req, res, next) {
