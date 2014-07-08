@@ -12,7 +12,26 @@ describe('Spot', function(){
 	var auth = { auth: spot.test.auths[userId].token };
 
 	describe('/spot create', function(){
+		it('should create a spot', function(done){
 
+			var body = {
+				message: 'Hello, Spot',
+				location: [ 1, 1 ],
+				groups: _.pluck(spot.test.groups[userId], 'id').slice(0,3)
+			};
+
+			server
+				.post('/spot')
+				.query(auth)
+				.send(body)
+				.expect(200)
+				.end(function(err, res){
+					should.not.exist(err);
+					should.exist(res);
+					res.body.message.should.equal(body.message);
+					done();
+				});
+		});
 	});
 
 	describe('/spot fetch', function(){

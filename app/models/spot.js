@@ -1,5 +1,6 @@
 
 var mongoose = require('mongoose')
+  , _ = require('underscore')
   , utils = spot.utils
   , model = require('./_base');
 
@@ -10,6 +11,13 @@ var SpotSchema = model.extend({
 	location: { type: [Number], required: true, index: '2d', sparse: true }, // [ longitude, latitude ]
 	active: { type: Boolean, default: true, index: true }
 });
+
+_.extend(SpotSchema.methods, {
+	
+	getHiddenKeys: function() {
+		return [ 'groups' ];
+	}
+})
 
 var Spot = mongoose.model('Spot', SpotSchema);
 module.exports = Spot;
