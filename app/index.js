@@ -35,7 +35,7 @@ exports.server = function(next, options) {
 		var server = require('./server')(next);
 		
 		// init controllers
-		var controllers = require('./controllers')(server.app);
+		spot.controllers = require('./controllers')(server.app);
 
 		// add server to global
 		_.extend(spot, server);
@@ -56,10 +56,7 @@ exports.jobs = function(next, options) {
 		init();
 
 		// start jobs server
-		var jobs = require('./jobs')(next);
-
-		// set jobs
-		spot.jobs = jobs;
+		spot.jobs = require('./jobs')(next);
 		
 	}, options.database);
 
