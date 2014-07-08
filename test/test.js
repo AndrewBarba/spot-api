@@ -1,5 +1,8 @@
 process.env.NODE_ENV = 'test';
 
+var USERS = 10;
+var GROUPS = 5
+
 var should = require('should')
   , mongoose = require('mongoose')
   , _ = require('underscore')
@@ -18,7 +21,7 @@ describe('Spot', function(){
 
 	it('should populate users', function(done){
 		var users = [];
-		_.times(50, function(i){
+		_.times(USERS, function(i){
 			users.push({
 				phone: i + spot.utils.randomNumberString(10)
 			});
@@ -46,7 +49,7 @@ describe('Spot', function(){
 		spot.test.groups = {};
 		async.each(spot.test.users, function(user, next){
 			var groups = [];
-			_.times(5, function(i){
+			_.times(GROUPS, function(i){
 				groups.push({
 					user: user.id,
 					name: spot.utils.randomHex(10),
@@ -62,9 +65,56 @@ describe('Spot', function(){
 		}, done);
 	});
 
+	it('should populate relationships', function(done){
+		spot.test.relationships = {};
+		async.each(spot.test.users, function(user, next){
+			var rels = [];
+			_.each(spot.test.users, function(u){
+				if (u.id != user.id) {
+					rels.push({
+						from: user.id,
+						to: u.id,
+						group: spot.test.groups[user.id][0],
+						nickname: spot.utils.randomHex(10)
+					});
+				}
+			});
+			spot.models.relationship.create(rels, function(err){
+				should.not.exist(err);
+				var docs = _.values(arguments).slice(1);
+				spot.test.relationships[user.id] = docs;
+				next();
+			});
+		}, done);
+	});
+
 	it('should run tests', function(done){
 		require('./controllers');
 		require('./jobs');
 		done();
 	});
 });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
