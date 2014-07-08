@@ -7,8 +7,11 @@ function stream() {
 	Task.stream(function(err, task){
 		if (err) {
 			spot.err(err);
-			return start(stream);
+			stream();
+			start();
+			return;
 		}
+
 		process(task);
 	});
 }
@@ -34,6 +37,8 @@ function process(task, next) {
 }
 
 function start(next) {
+	next = next || utils.noop;
+	
 	var query = Task.find({ state: Task.STATES.PENDING }).sort('created');
 	utils.asyncStream(query, process, next);
 }
@@ -47,8 +52,11 @@ module.exports = function(next) {
 	}, function(err, doc){
 		if (err) throw err;
 		
-		start(stream);
+		stream();
+		start();
 
 		next();
 	});
+
+	return spot.utils.loadFiles(__dirname);
 }

@@ -56,8 +56,11 @@ exports.jobs = function(next, options) {
 		init();
 
 		// start jobs server
-		require('./jobs')(next);
+		var jobs = require('./jobs')(next);
 
+		// set jobs
+		spot.jobs = jobs;
+		
 	}, options.database);
 
 	spot.log('SPOT JOBS SERVER\n');
