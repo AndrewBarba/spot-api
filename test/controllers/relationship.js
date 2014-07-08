@@ -52,4 +52,46 @@ describe('Relationship', function(){
 				});
 		});
 	});
+
+	describe('/relationship update', function(){
+		it('should update a relationship', function(done){
+			var userId = spot.test.users[0].id;
+			var auth = spot.test.auths[userId].token;
+			var relationship = spot.test.relationships[userId][0];
+
+			server
+				.put('/relationship/'+relationship.id)
+				.query({ auth: auth })
+				.send({ nickname: 'xxx', to: 'xxx' })
+				.expect(200)
+				.end(function(err, res){
+					should.not.exist(err);
+					should.exist(res);
+					res.body.nickname.should.equal('xxx');
+					res.body.to.should.not.equal('xxx');
+					done();
+				});
+		});
+	});
 });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

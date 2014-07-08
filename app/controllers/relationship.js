@@ -73,7 +73,7 @@ exports.update = function(req, res, next) {
 	var query = { _id: relId, from: userId };
 	var update = utils.select(ALLOWED_UPDATES, req.body);
 
-	Relationship.spot().findAndUpdate(query, update, function(err, doc){
+	Relationship.spot().findOneAndUpdate(query, update, function(err, doc){
 		if (err) return next(err);
 		if (!doc) return next(Error.NotFound('Could not find your relationship with id: ' + relId));
 		res.json(doc);
