@@ -52,19 +52,13 @@ exports.verifyUser = function(req, res, next) {
 	utils.verifyKeys(['phone', 'verificationCode'], req.body, function(err, body){
 		if (err) return next(err);
 
-		UserService.userForPhone(body.phone, function(err, user){
+		UserService.verifyUserByPhone(body.phone, body.verificationCode, function(err, user){
 			if (err) return next(err);
 
-			UserService.verifyUser(user, body.verificationCode, function(err){
+			AuthService.authForUser(user, function(err, auth){
 				if (err) return next(err);
 
-				AuthService.authForUser(user, function(err, auth){
-					if (err) return next(err);
-
-					res.json({
-						token: auth.token
-					});
-				});
+				res.json(auth);
 			});
 		});
 	});

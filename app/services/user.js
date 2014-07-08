@@ -48,13 +48,13 @@ exports.userForPhone = function(phone, next) {
 		});
 };
 
-exports.verifyUser = function(user, code, next) {
-	if (code && user.verificationCode === code) {
+exports.verifyUserByPhone = function(phone, code, next) {
+	User.findOne({ phone: phone, verificationCode: code }, function(err, user){
+		if (err) return next(err);
+		if (!user) return next(Error.BadRequest('Invalid verification code'));
 		user.verificationCode = null;
 		user.save(next);
-	} else {
-		next(Error.BadRequest('Invalid verification code'));
-	}
+	});
 }
 
 exports.usersWithPhones = function(phones, next) {
