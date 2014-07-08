@@ -27,13 +27,10 @@ exports.user = function (req, res, next) {
 }
 
 exports.group = function(req, res, next) {
-	exports.user(req, res, function(err){
+	exports.user(req, res, function(err, userId){
 		if (err) return next(err);
-
-		var groupId = req.params.id;
-		var userId = UserService.userId(res);
 		
-		Group.count({ _id: groupId, user: userId }, function(err, count){
+		Group.count({ _id: req.params.id, user: userId }, function(err, count){
 			if (err) return next(err);
 			if (count != 1) next(Error.NotFound());
 			next();

@@ -5,7 +5,9 @@ var mongoose = require('mongoose')
   , model = require('./_base');
 
 var TASKS = {
-	CREATE_USER: 'CREATE_USER'
+	USER: {
+		CREATE: 'user.create'
+	}
 };
 
 TASK_STATES = {

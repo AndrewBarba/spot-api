@@ -36,7 +36,7 @@ exports.fetchActiveSpots = function(userId, location, distance, next) {
 				$maxDistance: (distance / 69) // divide by 69 because 1 degree is about 69 miles
 			};
 		}
-
+		
 		Spot
 			.find(query)
 			.select('+user')

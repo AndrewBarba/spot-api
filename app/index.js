@@ -4,7 +4,7 @@ var _ = require('underscore')
 
 // GLOBAL
 spot          = {};
-spot.log      = winston.info;
+spot.log      = console.log;
 spot.warn     = winston.warn;
 spot.err      = winston.error;
 spot.info     = require('../package');
