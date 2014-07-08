@@ -19,6 +19,7 @@
         "response-time": "2.0.x",
         "twilio": "1.6.x",
         "underscore": "1.6.x",
+        "winston": "0.7.x",
         "ws": "0.4.x"
     },
 

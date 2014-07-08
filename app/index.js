@@ -1,9 +1,12 @@
 
-var _ = require('underscore');
+var _ = require('underscore')
+  , winston = require('winston');
 
 // GLOBAL
 spot          = {};
-spot.log      = console.log;
+spot.log      = winston.info;
+spot.warn     = winston.warn;
+spot.err      = winston.error;
 spot.info     = require('../package');
 spot.config   = require('./config');
 spot.error    = require('./errors');
