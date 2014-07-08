@@ -4,6 +4,7 @@ var utils = spot.utils
   , User = spot.models.user
   , UserService = spot.services.user
   , AuthService = spot.services.auth
+  , PushService = spot.services.push
   , _ = require('underscore');
 
 /**
@@ -96,6 +97,24 @@ exports.find = function(req, res, next) {
 		UserService.usersWithPhones(phones, function(err, users){
 			if (err) return next(err);
 			res.json(users);
+		});
+	});
+}
+
+/**
+ * Adds a push token to a user
+ */
+exports.addPushToken = function(req, res, next) {
+	utils.verifyKeys(['token', 'type'], req.body, function(err, body){
+		if (err) return next(err);
+
+		var userId = UserService.userId(res);
+		var token = body.token;
+		var type = body.type;
+
+		PushService.addPushTokenForUser(userId, token, type, function(err, push){
+			if (err) return next(err);
+			res.json(push);
 		});
 	});
 }
