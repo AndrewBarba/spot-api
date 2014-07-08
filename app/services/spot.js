@@ -24,24 +24,31 @@ exports.createSpot = function(userId, message, location, groupIds, next) {
 
 exports.fetchActiveSpots = function(userId, location, distance, next) {
 
-	Relationship.distinct('group', { to: userId }, function(err, groupIds){
+	Relationship.distinct('to', { from: userId }, function(err, userIds){
 		if (err) return next(err);
-		if (!groupIds || !groupIds.length) return next(null, []); 
+		if (!userIds || !userIds.length) return next(null, []);
 
-		var query = { active: true, groups: { $in: groupIds }};
+		var query = { to: userId, blocked: { $ne: true }, from: { $in: userIds }};
 
-		if (location) {
-			query.location = {
-				$near: location,
-				$maxDistance: (distance / 69) // divide by 69 because 1 degree is about 69 miles
-			};
-		}
-		
-		Spot
-			.find(query)
-			.select('+user')
-			.populate('user')
-			.exec(next);
+		Relationship.distinct('group', query, function(err, groupIds){
+			if (err) return next(err);
+			if (!groupIds || !groupIds.length) return next(null, []); 
+
+			var query = { active: true, groups: { $in: groupIds }};
+
+			if (location) {
+				query.location = {
+					$near: location,
+					$maxDistance: (distance / 69) // divide by 69 because 1 degree is about 69 miles
+				};
+			}
+			
+			Spot
+				.find(query)
+				.select('+user')
+				.populate('user')
+				.exec(next);
+		});
 	});
 }
 
