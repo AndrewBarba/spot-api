@@ -1,7 +1,8 @@
 process.env.NODE_ENV = 'test';
 
 var USERS = 10;
-var GROUPS = 5
+var GROUPS = 5;
+var SPOTS = 5;
 
 var should = require('should')
   , mongoose = require('mongoose')
@@ -83,6 +84,27 @@ describe('Spot', function(){
 				should.not.exist(err);
 				var docs = _.values(arguments).slice(1);
 				spot.test.relationships[user.id] = docs;
+				next();
+			});
+		}, done);
+	});
+
+	it('should populate spots', function(done){
+		spot.test.spots = {};
+		async.each(spot.test.users, function(user, next){
+			var spots = [];
+			_.times(SPOTS, function(){
+				spots.push({
+					user: user.id,
+					message: spot.utils.randomHex(20),
+					location: [ 1.0, 1.0 ],
+					groups: _.pluck(spot.test.groups[user.id], 'id').slice(0, 5)
+				});
+			});
+			spot.models.spot.create(spots, function(err){
+				should.not.exist(err);
+				var docs = _.values(arguments).slice(1);
+				spot.test.spots[user.id] = docs;
 				next();
 			});
 		}, done);

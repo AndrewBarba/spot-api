@@ -23,12 +23,26 @@ describe('Spot', function(){
 				.expect(200, function(err, res){
 					should.not.exist(err);
 					should.exist(res);
+					res.body.length.should.not.equal(0);
 					done();
 				});
 		});
 	});
 
 	describe('/spot leave', function(){
+		it('should leave a spot', function(done){
+			var spotId = spot.test.spots[userId][0].id;
 
+			server
+				.delete('/spot/'+spotId)
+				.query({ auth: auth })
+				.expect(200)
+				.end(function(err, res){
+					should.not.exist(err);
+					should.exist(res);
+					res.body.active.should.equal(false);
+					done();
+				});
+		});
 	});
 });

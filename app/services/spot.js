@@ -34,7 +34,11 @@ exports.fetchActiveSpots = function(userId, location, distance, next) {
 			if (err) return next(err);
 			if (!groupIds || !groupIds.length) return next(null, []); 
 
-			var query = { active: true, groups: { $in: groupIds }};
+			var query = { 
+				active: true, 
+				user: { $ne: userId }, 
+				groups: { $in: groupIds }
+			};
 
 			if (location) {
 				query.location = {
