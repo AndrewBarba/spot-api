@@ -72,10 +72,7 @@ exports.commentOnSpot = function(userId, spotId, message, next) {
 		spot: spotId,
 		user: userId,
 		message: message
-	}, function(err, doc){
-		if (err) return next(err);
-		next(null, doc);
-	});
+	}, next);
 }
 
 exports.leaveSpot = function(spotId, userId, next) {
