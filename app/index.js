@@ -39,6 +39,7 @@ exports.server = function(next, options) {
 
 		// add server to global
 		_.extend(spot, server);
+
 	}, options.database);
 
 	spot.log('SPOT WEB SERVER\n');
@@ -55,7 +56,8 @@ exports.jobs = function(next, options) {
 		init();
 
 		// start jobs server
-		var jobs = require('./jobs');
+		require('./jobs')(next);
+
 	}, options.database);
 
 	spot.log('SPOT JOBS SERVER\n');

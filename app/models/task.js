@@ -2,11 +2,15 @@
 var mongoose = require('mongoose')
   , _ = require('underscore')
   , utils = spot.utils
-  , model = require('./_base');
+  , model = require('./_base')
+  , Error = spot.error;
 
 var TASKS = {
 	USER: {
 		CREATE: 'user.create'
+	},
+	JOBS: {
+		START: 'jobs.start'
 	}
 };
 
@@ -19,13 +23,15 @@ TASK_STATES = {
 
 var TaskSchema = model.extendCapped(4194304, { // 4 megabytes
 	name: { type: String, required: true, trim: true },
-	state: { type: Number, default: TASK_STATES.PENDING },
+	state: { type: Number, default: TASK_STATES.PENDING, index: true },
 	data: Object
 });
 
 _.extend(TaskSchema.statics, {
 
 	TASKS: TASKS,
+
+	STATES: TASK_STATES,
 
 	stream: function(onData) {
 
@@ -35,10 +41,12 @@ _.extend(TaskSchema.statics, {
 		             	.stream();
 
 		if (onData) {
-		 	stream.on('data', function (doc) {
+		 	stream.on('data', function(doc){
 		    	onData(null, doc);   
-		 	}).on('error', function (err) {
+		 	}).on('error', function(err){
 		    	onData(err);
+		 	}).on('close', function(){
+		 		onData(Error.BadRequest());
 		 	});
 		}
 
