@@ -7,7 +7,7 @@ var SpotSchema = model.extend({
 	user: { type: String, ref: 'User', select: false, required: true, index: true },
 	message: { type: String, trim: true },
 	groups: { type: [String], select: false, required: true, index: true },
-	location: { type: [Number], index: '2d', sparse: true }, // [ longitude, latitude ]
+	location: { type: [Number], required: true, index: '2d', sparse: true }, // [ longitude, latitude ]
 	active: { type: Boolean, default: true, index: true }
 });
 
