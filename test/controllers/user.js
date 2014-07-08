@@ -116,6 +116,26 @@ var user1 = {
 				});
 		});
 	});
+
+	describe('/me/push create', function(){
+		it('should add a push token for user', function(done){
+
+			var push = { token: spot.utils.randomHex(20), type: 'ios' };
+
+			server
+				.put('/me/push')
+				.query({ auth: user1.auth })
+				.send(push)
+				.expect(200)
+				.end(function(err, res){
+					should.not.exist(err);
+					should.exist(res);
+					res.body.type.should.equal(push.type);
+					res.body.token.should.equal(push.token)
+					done();
+				});
+		});
+	});
  });
 
 
