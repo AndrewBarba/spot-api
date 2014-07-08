@@ -49,7 +49,7 @@ module.exports = function(app) {
 
 	// handle errors
 	app.use(function(err, req, res, next){
-		if (!spot.config.env.TEST) {
+		if (!config.env.TEST) {
 			spot.err(new Date(), req.method, req.url, err);
 		}
 		Error.send(err, res);
