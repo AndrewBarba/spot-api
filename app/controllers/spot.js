@@ -53,13 +53,9 @@ exports.comment = function(req, res, next) {
 		var spotId = req.params.id;
 		var text = body.comment;
 
-		Comment.create({
-			spot: spotId,
-			user: userId,
-			message: text
-		}, function(err, doc){
+		SpotService.commentOnSpot(userId, spotId, text, function(err, comment){
 			if (err) return next(err);
-			res.json(doc);
+			res.json(comment);
 		});
 	});
 }
@@ -70,12 +66,9 @@ exports.comment = function(req, res, next) {
 exports.leave = function(req, res, next) {
 	var spotId = req.params.id;
 	var userId = UserService.userId(res);
-	var query = { _id: spotId, user: userId };
-	var update = { active: false };
-
-	Spot.spot().findOneAndUpdate(query, update, function(err, doc){
+	
+	SpotService.leaveSpot(spotId, userId, function(err, spot){
 		if (err) return next(err);
-		if (!doc) return next(Error.NotFound('Could not find your spot with id: ' + spotId));
-		res.json(doc);
+		res.json(spot);
 	});
 }

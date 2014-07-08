@@ -20,7 +20,7 @@ exports.user = function (req, res, next) {
 			.exec(function(err, doc){
 				if (err) return next(err);
 				if (!doc) return next(Error.UnAuthorized());
-				res.set('spot-user', doc.user);
+				res.set(UserService.userHeaderKey(), doc.user);
 				next(null, doc.user);
 			});
 	});
@@ -47,11 +47,11 @@ exports.spot = function(req, res, next) {
 		
 		Spot
 			.findById(req.params.id)
-			.select('groups')
+			.select('groups user')
 			.exec(function(err, doc){
 				if (err) return next(err);
 				if (!doc) return next(Error.NotFound());
-				
+				if (doc.user === userId) return next();
 
 				var query = { to: userId, group: { $in: doc.groups }};
 				Relationship.count(query, function(err, count){

@@ -44,3 +44,39 @@ exports.fetchActiveSpots = function(userId, location, distance, next) {
 			.exec(next);
 	});
 }
+
+exports.commentOnSpot = function(userId, spotId, message, next) {
+
+	Comment.create({
+		spot: spotId,
+		user: userId,
+		message: message
+	}, function(err, doc){
+		if (err) return next(err);
+		next(null, doc);
+	});
+}
+
+exports.leaveSpot = function(spotId, userId, next) {
+	
+	var query = { _id: spotId, user: userId };
+	var update = { active: false };
+	
+	Spot.spot().findOneAndUpdate(query, update, function(err, doc){
+		if (err) return next(err);
+		if (!doc) return next(Error.NotFound('Could not find your spot with id: ' + spotId));
+		next(null, doc);
+	});
+}
+
+
+
+
+
+
+
+
+
+
+
+

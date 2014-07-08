@@ -4,6 +4,12 @@ var utils = spot.utils
   , User = spot.models.user
   , Auth = spot.models.auth;
 
+var USER_HEADER_KEY = 'spot-user';
+
+exports.userHeaderKey = function() {
+	return USER_HEADER_KEY;
+};
+
 exports.userForAuth = function(token, next) {
 	Auth
 		.findOne({ token: token, valid: true })
@@ -21,7 +27,7 @@ exports.userForAuth = function(token, next) {
 					next(null, user);
 				});
 		});
-}
+};
 
 exports.userForPhone = function(phone, next) {
 	phone = utils.setPhone(phone);
@@ -40,7 +46,7 @@ exports.userForPhone = function(phone, next) {
 				phone: phone
 			}, next);
 		});
-}
+};
 
 exports.verifyUser = function(user, code, next) {
 	if (code && user.verificationCode === code) {
@@ -55,11 +61,11 @@ exports.usersWithPhones = function(phones, next) {
 	User
 		.find({ phone: { $in: phones }})
 		.exec(next);
-}
+};
 
 exports.userId = function(res) {
-	return res.get('spot-user');
-}
+	return res.get(USER_HEADER_KEY);
+};
 
 
 

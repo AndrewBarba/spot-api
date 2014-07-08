@@ -38,7 +38,7 @@ module.exports = function(app) {
 	app.get('/spot', auth.user.user, controllers.spot.fetchActive);
 	app.post('/spot', auth.user.user, controllers.spot.create);
 	app.post('/spot/:id/comment', auth.user.spot, controllers.spot.comment);
-	app.delete('/spot/:id', auth.user.user, controllers.spot.leave);
+	app.delete('/spot/:id', auth.user.spot, controllers.spot.leave);
 
 	// not found
 	app.use(function(req, res, next){
