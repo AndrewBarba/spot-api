@@ -72,6 +72,20 @@ describe('Relationship', function(){
 					done();
 				});
 		});
+
+		it('should not update a relationship', function(done){
+			var userId = spot.test.users[0].id;
+			var auth = spot.test.auths[userId].token;
+
+			var userId2 = spot.test.users[1].id;
+			var relationship = spot.test.relationships[userId2][0];
+
+			server
+				.put('/relationship/'+relationship.id)
+				.query({ auth: auth })
+				.send({ nickname: 'xxx', to: 'xxx' })
+				.expect(404, done);
+		});
 	});
 });
 
