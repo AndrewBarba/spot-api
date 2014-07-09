@@ -28,7 +28,7 @@ function process(task, next) {
 			var job = task.name.split('.')[0];
 			var operator = spot.jobs[job];
 			if (operator) {
-				operator.process(task, function(err, task){
+				operator.process(task, function(err){
 					if (err) return next(err);
 					TaskService.completeTask(task, next);
 				});

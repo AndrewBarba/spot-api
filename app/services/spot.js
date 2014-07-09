@@ -5,6 +5,7 @@ var utils = spot.utils
   , Relationship = spot.models.relationship
   , Group = spot.models.group
   , Spot = spot.models.spot
+  , Task = spot.models.task
   , Comment = spot.models.comment
   , _ = require('underscore');
 
@@ -18,7 +19,13 @@ exports.createSpot = function(userId, message, location, groupIds, next) {
 			message: message,
 			location: location,
 			groups: groupIds
-		}, next);
+		}, function(err, doc){
+			if (err) return next(err);
+			next(null, doc);
+
+			TaskService = spot.services.task;
+			TaskService.postTask(Task.TASKS.SPOT.CREATE, doc);
+		});
 	});
 }
 
@@ -72,7 +79,13 @@ exports.commentOnSpot = function(userId, spotId, message, next) {
 		spot: spotId,
 		user: userId,
 		message: message
-	}, next);
+	}, function(err, doc){
+		if (err) return next(err);
+		next(null, doc);
+
+		TaskService = spot.services.task;
+		TaskService.postTask(Task.TASKS.SPOT.COMMENT, doc);
+	});
 }
 
 exports.leaveSpot = function(spotId, userId, next) {
@@ -84,6 +97,9 @@ exports.leaveSpot = function(spotId, userId, next) {
 		if (err) return next(err);
 		if (!doc) return next(Error.NotFound('Could not find your spot with id: ' + spotId));
 		next(null, doc);
+
+		TaskService = spot.services.task;
+		TaskService.postTask(Task.TASKS.SPOT.LEAVE, doc);
 	});
 }
 

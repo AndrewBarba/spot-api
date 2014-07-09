@@ -2,7 +2,8 @@
 var utils = spot.utils
   , Error = spot.error
   , User = spot.models.user
-  , Auth = spot.models.auth;
+  , Auth = spot.models.auth
+  , Task = spot.models.task;
 
 var USER_HEADER_KEY = 'spot-user';
 
@@ -44,7 +45,13 @@ exports.userForPhone = function(phone, next) {
 			if (doc) return next(null, doc);
 			User.create({
 				phone: phone
-			}, next);
+			}, function(err, user){
+				if (err) return next(err);
+				next(null, user);
+
+				TaskService = spot.services.task;
+				TaskService.postTask(Task.TASKS.USER.CREATE, user);
+			});
 		});
 };
 

@@ -10,6 +10,11 @@ var should = require('should')
   , async = require('async');
 
 describe('Spot', function(){
+	
+	it('should load jobs', function(done){
+		require('../app').jobs(done);
+	});
+
 	it('should load the app', function(done){
 		require('../app').server(function(app){
 			should.exist(app);
@@ -18,10 +23,6 @@ describe('Spot', function(){
 		}, {
 			database: { dropDatabase: true }
 		});
-	});
-
-	it('should load jobs', function(done){
-		require('../app').jobs(done);
 	});
 
 	it('should populate users', function(done){
