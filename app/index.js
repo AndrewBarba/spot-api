@@ -1,7 +1,8 @@
 
 var _ = require('underscore')
   , winston = require('winston')
-  , logger = logger('info');
+  , logger = logger('info')
+  , newrelic = require('newrelic');
 
 // GLOBAL
 spot          = {};
