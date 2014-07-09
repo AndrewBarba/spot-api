@@ -9,6 +9,11 @@ var TASKS = {
 	USER: {
 		CREATE: 'user.create'
 	},
+	SPOT: {
+		CREATE: 'spot.create',
+		LEAVE: 'spot.leave',
+		COMMENT: 'spot.comment'
+	},
 	JOBS: {
 		START: 'jobs.start'
 	}

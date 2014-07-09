@@ -41,9 +41,10 @@ exports.server = function(next, options) {
 		// add server to global
 		_.extend(spot, server);
 
+		spot.log('CONNECTED TO DATABASE\n');
 	}, options.database);
 
-	spot.log('SPOT WEB SERVER\n');
+	spot.log('SPOT WEB SERVER');
 };
 
 // Jobs server
@@ -59,9 +60,10 @@ exports.jobs = function(next, options) {
 		// start jobs server
 		spot.jobs = require('./jobs')(next);
 		
+		spot.log('CONNECTED TO DATABASE\n');
 	}, options.database);
 
-	spot.log('SPOT JOBS SERVER\n');
+	spot.log('SPOT JOBS SERVER');
 };
 
 // logger
