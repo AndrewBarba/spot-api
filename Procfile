@@ -1,2 +1,2 @@
-web: node process/server-cluster.js
-worker: node process/jobs-cluster.js
+web: node process/server.js
+worker: node process/jobs.js
