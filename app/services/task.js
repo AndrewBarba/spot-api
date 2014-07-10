@@ -9,7 +9,8 @@ exports.postTask = function(name, data, next) {
 	}, next);
 }
 
-exports.completeTask = function(complete, task, next) {
-	task.state = complete ? Task.STATES.COMPLETE : Task.STATES.FAILED;
+exports.completeTask = function(err, task, next) {
+	task.state = err ? Task.STATES.FAILED : Task.STATES.COMPLETE;
+	task.error = err ? err.toString() : null;
 	task.save(next);
 }

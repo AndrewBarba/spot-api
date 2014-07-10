@@ -29,7 +29,8 @@ TASK_STATES = {
 var TaskSchema = model.extendCapped(4194304, { // 4 megabytes
 	name: { type: String, required: true, trim: true },
 	state: { type: Number, default: TASK_STATES.PENDING, index: true },
-	data: Object
+	data: Object,
+	error: String
 });
 
 _.extend(TaskSchema.statics, {
