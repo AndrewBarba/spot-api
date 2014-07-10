@@ -13,6 +13,10 @@ var prod = {
       cert: 'certificates/apple/prod/cert.pem',
       key: 'certificates/apple/prod/key.pem',
     },
+    newrelic: {
+        name: 'spot-api-prod',
+        token: 'cd637ad2ad215a204831860bcf3dc21267ae4d74'
+    },
     twilio: {
         sid: 'AC444de0a850e8d0e457e3f8ae5b9e332b',
         token: '1dc58f02c00de870bbfd553826c7bf56',
@@ -31,6 +35,10 @@ var dev = {
       gateway: 'gateway.push.apple.com',
       cert: 'certificates/apple/dev/cert.pem',
       key: 'certificates/apple/dev/key.pem',
+    },
+    newrelic: {
+        name: 'spot-api-dev',
+        token: 'cd637ad2ad215a204831860bcf3dc21267ae4d74'
     },
     twilio: {
         sid: 'AC444de0a850e8d0e457e3f8ae5b9e332b',
