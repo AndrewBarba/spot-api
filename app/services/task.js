@@ -9,7 +9,7 @@ exports.postTask = function(name, data, next) {
 	}, next);
 }
 
-exports.completeTask = function(task, next) {
-	task.state = Task.STATES.COMPLETE;
+exports.completeTask = function(complete, task, next) {
+	task.state = complete ? Task.STATES.COMPLETE : Task.STATES.FAILED;
 	task.save(next);
 }

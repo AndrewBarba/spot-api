@@ -29,11 +29,10 @@ function process(task, next) {
 			var operator = spot.jobs[job];
 			if (operator) {
 				operator.process(task, function(err){
-					if (err) return next(err);
-					TaskService.completeTask(task, next);
+					TaskService.completeTask(!err, task, next);
 				});
 			} else {
-				TaskService.completeTask(task, next);
+				TaskService.completeTask(true, task, next);
 			}
 		} else {
 			next();
