@@ -1,6 +1,6 @@
 {
     "name": "Spot",
-    "version": "0.0.1",
+    "version": "1.0.0",
     "description": "Node.js backend for Spot",
     "url": "http://api.example.com/",
     "author": "Andrew Barba",

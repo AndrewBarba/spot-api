@@ -1,9 +1,12 @@
 
 var mongoose = require('mongoose')
+  , utils = spot.utils
   , Error = spot.error;
 
 exports.root = function(req, res, next) {
-    res.json(spot.info);
+    var select = [ 'name', 'version', 'description', 'author' ];
+    var info = utils.select(select, spot.info);
+    res.json(info);
 }
 
 exports.status = function(req, res, next) {
