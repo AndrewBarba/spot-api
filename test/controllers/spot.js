@@ -1,7 +1,6 @@
 
 var request = require('supertest')
   , should = require('should')
-  , server = request(spot.app)
   , utils = spot.utils
   , _ = require('underscore')
   , async = require('async');
@@ -20,7 +19,7 @@ describe('Spot', function(){
 				groups: _.pluck(spot.test.groups[userId], 'id').slice(0,3)
 			};
 
-			server
+			spot.test.server()
 				.post('/spot')
 				.query(auth)
 				.send(body)
@@ -36,7 +35,7 @@ describe('Spot', function(){
 
 	describe('/spot fetch', function(){
 		it('should fetch all active spots', function(done){
-			server
+			spot.test.server()
 				.get('/spot')
 				.query(auth)
 				.expect(200, function(err, res){
@@ -52,7 +51,7 @@ describe('Spot', function(){
 		it('should leave a spot', function(done){
 			var spotId = spot.test.spots[userId][0].id;
 
-			server
+			spot.test.server()
 				.delete('/spot/'+spotId)
 				.query(auth)
 				.expect(200)
@@ -71,7 +70,7 @@ describe('Spot', function(){
 		var comment = { comment: 'Hello, World' };
 
 		it('should post a comment to a spot', function(done){
-			server
+			spot.test.server()
 				.post('/spot/'+spotId+'/comment')
 				.query(auth)
 				.send(comment)
@@ -86,7 +85,7 @@ describe('Spot', function(){
 		});
 
 		it('should fetch all comments', function(done){
-			server
+			spot.test.server()
 				.get('/spot/'+spotId+'/comment')
 				.query(auth)
 				.expect(200)

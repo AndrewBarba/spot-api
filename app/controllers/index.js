@@ -17,6 +17,7 @@ module.exports = function(app) {
 	// me
 	app.get('/me', controllers.user.me);
 	app.put('/me', auth.user.user, controllers.user.updateCurrent);
+	app.put('/me/contact', auth.user.user, controllers.user.addContacts);
 	app.put('/me/push', auth.user.user, controllers.user.addPushToken);
 
 	// user

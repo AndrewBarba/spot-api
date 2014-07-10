@@ -7,7 +7,8 @@ var SPOTS = 5;
 var should = require('should')
   , mongoose = require('mongoose')
   , _ = require('underscore')
-  , async = require('async');
+  , async = require('async')
+  , request = require('supertest');
 
 describe('Spot', function(){
 	
@@ -18,7 +19,11 @@ describe('Spot', function(){
 	it('should load the app', function(done){
 		require('../app').server(function(app){
 			should.exist(app);
-			spot.test = {};
+			spot.test = {
+				server: function() {
+					return request(app);
+				}
+			};
 			done();
 		}, {
 			database: { dropDatabase: true }

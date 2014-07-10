@@ -1,7 +1,6 @@
 
 var request = require('supertest')
   , should = require('should')
-  , server = request(spot.app)
   , utils = spot.utils
   , _ = require('underscore')
   , async = require('async');
@@ -25,7 +24,7 @@ describe('Relationship', function(){
 		};
 
 		it('should create new relationships', function(done){
-			server
+			spot.test.server()
 				.post('/relationship')
 				.query({ auth: auth })
 				.send(body)
@@ -39,7 +38,7 @@ describe('Relationship', function(){
 		});
 
 		it('should not create any new relationships', function(done){
-			server
+			spot.test.server()
 				.post('/relationship')
 				.query({ auth: auth })
 				.send(body)
@@ -59,7 +58,7 @@ describe('Relationship', function(){
 			var auth = spot.test.auths[userId].token;
 			var relationship = spot.test.relationships[userId][0];
 
-			server
+			spot.test.server()
 				.put('/relationship/'+relationship.id)
 				.query({ auth: auth })
 				.send({ nickname: 'xxx', to: 'xxx' })
@@ -80,7 +79,7 @@ describe('Relationship', function(){
 			var userId2 = spot.test.users[1].id;
 			var relationship = spot.test.relationships[userId2][0];
 
-			server
+			spot.test.server()
 				.put('/relationship/'+relationship.id)
 				.query({ auth: auth })
 				.send({ nickname: 'xxx', to: 'xxx' })
@@ -93,7 +92,7 @@ describe('Relationship', function(){
 			var userId = spot.test.users[1].id;
 			var auth = spot.test.auths[userId].token;
 
-			server
+			spot.test.server()
 				.get('/relationship')
 				.query({ auth: auth })
 				.expect(200)
@@ -110,7 +109,7 @@ describe('Relationship', function(){
 			var groupId = spot.test.groups[userId][0].id;
 			var auth = spot.test.auths[userId].token;
 			
-			server
+			spot.test.server()
 				.get('/group/'+groupId+'/relationship')
 				.query({ auth: auth })
 				.expect(200)

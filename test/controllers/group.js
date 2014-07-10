@@ -1,7 +1,6 @@
 
 var request = require('supertest')
-  , should = require('should')
-  , server = request(spot.app);
+  , should = require('should');
 
 var group1 = {
 	name: 'Friends',
@@ -21,7 +20,7 @@ var group1 = {
  				priority: group1.priority
  			};
 
- 			server
+ 			spot.test.server()
  				.post('/group')
  				.query({ auth: auth })
  				.send(body)
@@ -42,7 +41,7 @@ var group1 = {
  			var user = spot.test.users[1];
  			var auth = spot.test.auths[user.id].token;
  			
- 			server
+ 			spot.test.server()
  				.put('/group/' + group1.id)
  				.query({ auth: auth })
  				.send({ name: 'xxx' })
@@ -59,7 +58,7 @@ var group1 = {
  				user: 'xxx' 
  			};
 
- 			server
+ 			spot.test.server()
  				.put('/group/' + group1.id)
  				.query({ auth: auth })
  				.send(body)
@@ -79,7 +78,7 @@ var group1 = {
  		var auth = spot.test.auths[user.id].token;
 
  		it('should find my groups', function(done){
- 			server
+ 			spot.test.server()
  				.get('/group')
  				.query({ auth: auth })
  				.expect(200)

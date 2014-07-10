@@ -3,7 +3,9 @@ var utils = spot.utils
   , Error = spot.error
   , User = spot.models.user
   , Auth = spot.models.auth
-  , Task = spot.models.task;
+  , Contact = spot.models.contact
+  , Task = spot.models.task
+  , async = require('async');
 
 var USER_HEADER_KEY = 'spot-user';
 
@@ -74,7 +76,31 @@ exports.userId = function(res) {
 	return res.get(USER_HEADER_KEY);
 };
 
+exports.storeContactsForUser = function(userId, contacts, next) {
+	next = next || utils.noop;
 
+	var count = 0;
+
+	async.each(contacts, function(contact, done){
+
+		var nickname = contact.nickname;
+		var phone = utils.setPhone(contact.phone);
+
+		var query = { user: userId, phone: phone };
+		var update = { user: userId, phone: phone, nickname: nickname };
+		var options = { upsert: true, select: '_id' };
+
+		Contact.findOneAndUpdate(query, update, options, function(err){
+			if (err) return done(err);
+			count++;
+			done();
+		});	
+
+	}, function(err){
+		if (err) return next(err);
+		next(null, count);
+	});
+}
 
 
 

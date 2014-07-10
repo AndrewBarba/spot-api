@@ -1,12 +1,9 @@
 
-var request = require('supertest')
-  , server = request(spot.app);
-
  describe('Root', function(){
  	
  	describe('/', function(){
  		it('should return a 200 OK', function(done){
- 			server
+ 			spot.test.server()
  				.get('/')
  				.expect(200, done);
  		});
@@ -14,7 +11,7 @@ var request = require('supertest')
 
  	describe('/status', function(){
  		it('should return a 200 OK', function(done){
- 			server
+ 			spot.test.server()
  				.get('/status')
  				.expect(200, done);
  		});
@@ -22,7 +19,7 @@ var request = require('supertest')
 
  	describe('/fake', function(){
  		it('should return a 404 Not found', function(done){
- 			server
+ 			spot.test.server()
  				.get('/fake')
  				.expect(404, done);
  		});

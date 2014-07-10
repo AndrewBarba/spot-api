@@ -96,6 +96,25 @@ exports.find = function(req, res, next) {
 }
 
 /**
+ * Post contacts for user
+ */
+exports.addContacts = function(req, res, next) {
+	utils.verifyKeys(['contacts'], req.body, function(err, body){
+		if (err) return next(err);
+
+		var userId = UserService.userId(res);
+		var contacts = req.body.contacts;
+
+		UserService.storeContactsForUser(userId, contacts, function(err, count){
+			if (err) return next(err);
+			res.json({
+				count: count
+			});
+		});
+	});
+}
+
+/**
  * Adds a push token to a user
  */
 exports.addPushToken = function(req, res, next) {
