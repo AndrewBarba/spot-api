@@ -24,6 +24,8 @@ module.exports = function(onConnect, options) {
     mongoose.connect(config.db, dbOptions, function(err){
         _connected = !err;
 
+        spot.log('Connected to database');
+
         if (options.dropDatabase) {
             mongoose.connection.db.dropDatabase(onConnect);
         } else {    
