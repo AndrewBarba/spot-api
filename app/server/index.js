@@ -5,8 +5,14 @@ var port = process.env.PORT || 3000
   , bodyParser = require('body-parser')
   , responseTime = require('response-time')
   , utils = spot.utils
+  , config = spot.config;
 
 module.exports = function(next) {
+
+    // check ssl
+    if (config.env.PROD) {
+        app.use(ssl);
+    }
 
     // middle ware
     app.use(responseTime(0));
@@ -26,6 +32,15 @@ module.exports = function(next) {
         app: app,
         server: server,
         port: port
+    }
+}
+
+function ssl(req, res, next) {
+    if(req.headers['x-forwarded-proto'] != 'https') {
+        res.redirect(301, 'https://' + req.get('host') + req.url);
+    } else {
+        res.header("Strict-Transport-Security", "max-age=31536000");
+        next();
     }
 }
 

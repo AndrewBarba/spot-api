@@ -1,5 +1,5 @@
 {
-    "name": "Spot",
+    "name": "spot-api",
     "version": "0.6.0",
     "description": "Node.js backend for Spot",
     "url": "http://api.example.com/",
