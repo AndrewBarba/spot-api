@@ -68,7 +68,7 @@ exports.verifyUser = function(req, res, next) {
  * Updates the current user
  */
 exports.updateCurrent = function(req, res, next) {
-	var ALLOWED_UPDATES = [ 'firstName', 'lastName', 'imageUrl' ];
+	var ALLOWED_UPDATES = [ 'firstName', 'lastName', 'imageUrl', 'location' ];
 
 	var userId = UserService.userId(res);
 	var update = utils.select(ALLOWED_UPDATES, req.body);

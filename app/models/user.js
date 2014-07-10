@@ -9,7 +9,8 @@ var UserSchema = model.extend({
 	lastName: { type: String, trim: true },
 	imageUrl: { type: String, trim: true },
 	phone: { type: String,  set: utils.setPhone, select: false, required: true, index: { unique: true }},
-	verificationCode: { type: String, default:  verificationCode, select: false, index: { sparse: true }}
+	verificationCode: { type: String, default:  verificationCode, select: false, index: { sparse: true }},
+	location: { type: [Number], index: '2d', sparse: true }, // [ longitude, latitude ]
 });
 
 // static methods
