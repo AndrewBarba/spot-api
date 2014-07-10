@@ -17,7 +17,12 @@ var OPTIONS = {
     transform: function(doc, ret, options) {
         var hide = HIDE.concat(doc.getHiddenKeys());
         hide.forEach(function(key){
-            delete ret[key]
+            delete ret[key];
+        });
+        Object.keys(ret).forEach(function(key){
+            if (ret[key] === undefined) {
+                delete ret[key];
+            }
         });
     }
 }

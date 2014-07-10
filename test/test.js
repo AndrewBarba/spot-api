@@ -13,7 +13,9 @@ var should = require('should')
 describe('Spot', function(){
 	
 	it('should load jobs', function(done){
-		require('../app').jobs(done);
+		require('../app').jobs(done, {
+			database: { dropDatabase: true }
+		});
 	});
 
 	it('should load the app', function(done){
