@@ -34,6 +34,6 @@
     "scripts": {
         "start": "node process/server.js",
         "jobs": "node process/jobs.js",
-        "test": "mocha --timeout 120000"
+        "test": "mocha"
     }
 }
