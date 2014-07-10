@@ -12,6 +12,10 @@ var ios = new apn.Connection({
 });
 
 exports.sendPush = function(tokens, message, payload, next) {
+	if (config.env.TEST) {
+		return next();
+	}
+	
 	_.each(tokens, function(token){
 		var push = new apn.Notification();
 		push.expiry = Math.floor(Date.now() / 1000) + (12 * 60 * 60); // Expires x hours from now.

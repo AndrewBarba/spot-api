@@ -10,7 +10,7 @@ var UserSchema = model.extend({
 	imageUrl: { type: String, trim: true },
 	phone: { type: String,  set: utils.setPhone, select: false, required: true, index: { unique: true }},
 	verificationCode: { type: String, default:  verificationCode, select: false, index: { sparse: true }},
-	location: { type: [Number], index: '2d', sparse: true }, // [ longitude, latitude ]
+	location: { type: [Number], index: '2d', sparse: true, select: false }, // [ longitude, latitude ]
 });
 
 // static methods
